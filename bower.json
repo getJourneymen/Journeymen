@@ -3,5 +3,6 @@
   "version": "0.0.0",
   "directory": "client/bower_components",
   "dependencies": {
+    "angular": "^1.5.3"
   }
 }
