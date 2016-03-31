@@ -4,11 +4,11 @@ var bodyParser = require('body-parser');
 var SoundCloudStrategy = require('passport-soundcloud').Strategy;
 var path = require('Path');
 var logout = require('express-passport-logout')
+var auth = require('auth');
 //var db = require('db');
 
 
-var SOUNDCLOUD_CLIENT_ID ='c9eae4a12b0b429d520addb31b57046f';
-var SOUNDCLOUD_CLIENT_SECRET ='8e5da229efe9fed0f350759cb41caab4';
+
 
 //This is necessary to allow persistent login sessions--'remember me'
 passport.serializeUser(function(user, done) {
@@ -20,8 +20,8 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new SoundCloudStrategy({
-    clientID: SOUNDCLOUD_CLIENT_ID,
-    clientSecret: SOUNDCLOUD_CLIENT_SECRET,
+    clientID: auth.soundCloud_id;
+    clientSecret:auth.soundCloud_secret,
     callbackURL: "http://localhost/auth/soundcloud/callback"
   },
     function(accessToken, refreshToken, profile, done) {
@@ -40,9 +40,9 @@ passport.use(new SoundCloudStrategy({
 var app = express();
 
 
-// // app.use(express.cookieParser());
-// // app.use(express.methodOverride());
-//app.use(express.session({ secret: 'kitkat' }));
+app.use(express.cookieParser());
+app.use(express.methodOverride());
+app.use(express.session({ secret: 'kitkat' }));
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions (recommended).
 
@@ -80,7 +80,7 @@ format for 'search' req body--{query:{instrument:,date:,location:}}
 */
 
 app.get('/search', function(req,res){
-	//database query--
+	//search database for musicians that fit query
   res.send({response: 'you did it'})
 })
 
@@ -89,7 +89,7 @@ format for 'profile' req body--{profile: {name:,instrument:,avail:}}
 */
 
 app.get('/account', ensureAuthenticated, function(req,res){
-  
+  //find record in database and serve
 })
 
 app.put('/account',function(req,res){
