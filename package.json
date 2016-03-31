@@ -1,0 +1,11 @@
+{
+  "name": "getJourneymen",
+  "version": "0.0.1",
+  "main": "server/server.js",
+  "author": "getJourneymen",
+  "dependencies": {
+  	"body-parser": "^1.15.0",
+  	"request": "^2.34.0",
+  	"express": "^4.13.4"
+  }
+}
