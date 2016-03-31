@@ -1,0 +1,20 @@
+<div class="searchContainer">
+  <form id="searchForm" name="searchForm" ng-controller="searchCtlr" ng-submit="search()">
+    <div class="input-group">
+    <label for="startTime" class="sr-only">From</label>
+      <input type="datetime" name="start" ng-model="end">
+    </div>
+    <div class="input-group">
+    <label for="startTime" class="sr-only">To</label>
+      <input type="datetime" name="end" ng-model="end">
+    </div>
+    <select name="instrument" ng-controller="InstrumentCtlr">
+      <option ng-model="searchCtlr.instrument">Choose an instrument</option>
+      <option ng-repeat="instrument in instruments" value="{{instrument.id}}">{{instrument.name}}</option>
+    </select>
+    <div class="input-group">
+      <label for="location" class="sr-only">Location</label>
+      <input type="text" name="location" ng-model="location" placeholder="Location"></input>
+    </div>
+  </form>
+</div>
