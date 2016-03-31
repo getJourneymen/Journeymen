@@ -6,10 +6,10 @@ var logout = require('express-passport-logout')
 var auth = require('./auth');
 //var db = require('db');
 
+//npm install express-passport-logout --save
+//
 
 
-
-//This is necessary to allow persistent login sessions--'remember me'
 
 var app = express();
 
@@ -36,12 +36,21 @@ app.get('/',function(req,res){
   res.send('you did it');
 })
 
+
+app.get('/',function(req,res){
+  res.sendFile('/index.html')
+})
+
 /*
 format for 'search' req body--{query:{instrument:,date:,location:}} 
 */
 
 app.get('/search', function(req,res){
+
 	//search database for musicians that fit query
+
+	//database query--
+
   res.send({response: 'you did it'})
 })
 
@@ -50,7 +59,7 @@ format for 'profile' req body--{profile: {name:,instrument:,avail:}}
 */
 
 app.get('/account', ensureAuthenticated, function(req,res){
-  //find record in database and serve
+
 })
 
 app.put('/account',function(req,res){
@@ -61,6 +70,7 @@ app.get('/logout',function(req,res){
   req.logout();
   res.redirect('/');
 })
+
 
 /***********************************
           Auth routes
@@ -76,6 +86,24 @@ app.get('/auth/soundcloud/callback',
 /**********************************
         middleware auth check
 ***********************************/
+
+
+//Auth routes
+
+app.get('/auth/soundcloud',
+  passport.authenticate('soundcloud'),
+  function(req, res){
+    // The request will be redirected to SoundCloud for authentication, so this
+    // function will not be called.
+  });
+
+app.get('/auth/soundcloud/callback',
+  passport.authenticate('soundcloud', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+
+//middleware auth check
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
