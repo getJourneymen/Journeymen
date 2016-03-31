@@ -11,18 +11,18 @@ exports.up = function(knex, Promise) {
     }),
     knex.schema.createTable('Auth', function(table) {
       table.increments('id').primary();
-      table.foreign('user').references('users.id');
+      table.foreign('user').references('id').inTable('users');
       table.string('token');
       table.string('service');
     }),
     knex.schema.createTable('sessions', function(table) {
       table.increments('id').primary();
-      table.foreign('user').references('users.id');
+      table.foreign('user').references('id').inTable('users');
       table.string('jwt');
     }),
     knex.schema.createTable('availabilty', function(table) {
       table.increments('id').primary();
-      table.foreign('user').references('users.id');
+      table.foreign('user').references('id').inTable('users');
       table.dateTime('start');
       table.dateTime('end');
       table.string('instruments');
