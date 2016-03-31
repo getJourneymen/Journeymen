@@ -37,8 +37,7 @@ passport.use(new SoundCloudStrategy({
        }
       return done(null, profile);
     });
-  }
-));
+  }));
 
 var app = express();
 
@@ -60,7 +59,7 @@ app.configure(function() {
   });
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded ({extended:true}));
-}  
+})  
 
 app.get('/',function(req,res){
   res.sendFile('/index.html')
@@ -115,3 +114,4 @@ function ensureAuthenticated(req, res, next) {
 }
 
 app.listen(8080);
+console.log('server is up at 8080')
