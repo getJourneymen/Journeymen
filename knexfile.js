@@ -1,7 +1,7 @@
 module.exports = {
 
   development: {
-    client: 'pg',
+    client: 'postgresql',
     connection: {
       database: 'journeymen_dev'
     }
