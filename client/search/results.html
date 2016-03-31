@@ -1,0 +1,14 @@
+<div class="results media-list" ng-controller="ResultsCtlr">
+  <div class="result media" ng-repeat="person in data">
+    <div class="media-left">
+      <a href="#"><!-- TODO -->
+        <img class="media-object" src="http://placehold.it/150x150" alt="Placeholder">
+      </a>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">{{person.name}}</h4>
+      <div>{{person.description}}</div>
+      <div>Available {{person.start}} &mdash; {{person.end}}</li></div>
+    </div>
+  </div>
+</div>
