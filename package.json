@@ -17,6 +17,5 @@
   },
   "scripts": {
     "start": "./node_modules/.bin/nodemon server/index.js --ignore node_modules/"
-
   }
 }
