@@ -1,0 +1,16 @@
+<div class="profile" ng-controller="ProfileCtlr">
+  <form class="profileForm" ng-submit="editProfile()">
+    <div class="input-group">
+      <label for="first">First Name</label>
+      <input type="text" name="first" ng-model="first">
+    </div>
+    <div class="input-group">
+      <label for="last">Last Name</label>
+      <input type="text" name="last" ng-model="last">
+    </div>
+    <div class="input-group">
+      <label for="description">Description</label>
+      <textarea name="description" rows="3" cols="40" ng-model="description"></textarea>
+    </div>
+  </form>
+</div>
