@@ -1,4 +1,4 @@
-app.controller('SearchCtlr', ['$scope', 'SearchSvc', function($scope, SearchSvc) {
+app.controller('SearchCtlr', ['$scope', '$state', 'SearchSvc', function($scope, $state, SearchSvc) {
 
   //Client should require all fields
   $scope.start = '';
@@ -10,6 +10,7 @@ app.controller('SearchCtlr', ['$scope', 'SearchSvc', function($scope, SearchSvc)
     SearchSvc.search({start: $scope.start, end: $scope.end, location: $scope.location, instrument: $scope.instrument})
       .then(function(data){
         //Search service should have completed, need to redirect user to results state.
+        $state.go('results');
       })
       .catch(function(err){
         console.log('An error occured performing the search', err)
