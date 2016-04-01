@@ -9,7 +9,7 @@ exports.up = function(knex, Promise) {
       table.string('firstname');
       table.string('lastname');
       table.string('email');
-      table.string('instruments');
+      table.string('instrument');
     }),
 
 
@@ -34,11 +34,8 @@ exports.up = function(knex, Promise) {
       table.integer('journeyman_id').references('id').inTable('Journeymen');
       table.dateTime('start');
       table.dateTime('end');
-      table.string('instruments');
+      table.string('instrument');
     })
-    // knex('users').insert([{firstname: 'Frankie', lastname:'Vithayathil'},{firstname: 'John', lastname:'Doe'}]);
-
-    // console.log('I can read this');
   ])
 }
 
