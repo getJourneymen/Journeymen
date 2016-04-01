@@ -5,11 +5,9 @@ var path = require('Path');
 var logout = require('express-passport-logout')
 var auth = require('./auth');
 var db = require('./db.js');
+var util = require('./utilities.js');
 
 //npm install express-passport-logout --save
-//
-
-
 
 var app = express();
 
@@ -30,13 +28,7 @@ var configAuth = require('./passport')(app,express);
 *********************************/
 app.get('/login', passport.authenticate('soundcloud'));
 
-
-app.get('/',function(req,res){
-  //res.sendFile('/index.html')
-  res.send('you did it');
-})
-
-
+//Serve index.html
 app.get('/',function(req,res){
   res.sendFile('/index.html')
 })
@@ -48,6 +40,10 @@ format for 'search' req body--{query:{instrument:,date:,location:}}
 app.get('/search', function(req,res){
 
 	//search database for musicians that fit query
+  util.searchUsers(req.body)
+    .then(function(rows) {
+      return rows;
+    });
 
 	//database query--
 
@@ -59,11 +55,20 @@ format for 'profile' req body--{profile: {name:,instrument:,avail:}}
 */
 
 app.get('/account', ensureAuthenticated, function(req,res){
-
+  util.getUser(req.body)
+  .then(function(row){
+    res.send(row);
+  })
+  .catch(function(err){
+    console.error(err)
+  })
 })
 
 app.put('/account',function(req,res){
-  //apply changes to database record
+  util.updateUser(req.body)
+    .then(function(something) {
+      console.log('whatever update query returns:', something);
+    })
 })
 
 app.get('/logout',function(req,res){
