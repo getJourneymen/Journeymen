@@ -12,7 +12,7 @@ var util = require('./utilities.js');
 var app = express();
 
 
-app.use(express.static(__dirname + './client'));
+app.use(express.static('./client'));
 app.use(function(req, res, next) {
 res.header("Access-Control-Allow-Origin", "*");
 res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -28,53 +28,77 @@ var configAuth = require('./passport')(app,express);
 *********************************/
 app.get('/login', passport.authenticate('soundcloud'));
 
-//Serve index.html
+/*****************************************
+            Get Requests
+  1. Serve index.html
+  2. Search Format : req.body --{query: {instrument: string, date: string, location:string}}
+  3. Logout
+******************************************/
 app.get('/',function(req,res){
   res.sendFile('/index.html')
 })
-
-/*
-format for 'search' req body--{query:{instrument:,date:,location:}}
-*/
-
 app.get('/search', function(req,res){
-
-	//search database for musicians that fit query
-  util.searchUsers(req.body)
+  util.searchUsers(req.body.query)
     .then(function(rows) {
       return rows;
     });
-
-	//database query--
-
   res.send({response: 'you did it'})
+})
+app.get('/logout',function(req,res){
+  req.logout();
+  res.redirect('/');
 })
 
 /*
 format for 'profile' req body--{profile: {name:,instrument:,avail:}}
 */
 
-app.get('/account', ensureAuthenticated, function(req,res){
-  util.getUser(req.body)
-  .then(function(row){
-    res.send(row);
-  })
-  .catch(function(err){
-    console.error(err)
-  })
+// app.get('/account', ensureAuthenticated, function(req,res){
+//   util.getUser(req.body)
+//   .then(function(row){
+//     res.send(row);
+//   })
+//   .catch(function(err){
+//     console.error(err)
+//   })
+// })
+
+
+/**********************************
+        Post Requests
+1. New User Format should be req.body ----{user:{firstname: string,
+   lastname: string, email: string, instrument: string}}
+2. New Availability Format should be req.body ----{time:{journeymen_id: integer,
+   start: DateTime, end: DateTime, instrument: string }}
+**********************************/
+
+app.post('signup', function(req, res) {
+  util.createUser(req.body)
+})
+app.post('/avail', function(req, res) {
+  util.createAvail(req.body)
 })
 
+
+
+
+
+
+
+
+/**********************************
+  Update Information
+***********************************/
 app.put('/account',function(req,res){
   util.updateUser(req.body)
     .then(function(something) {
       console.log('whatever update query returns:', something);
     })
 })
-
-app.get('/logout',function(req,res){
-  req.logout();
-  res.redirect('/');
+app.put('/avail', function(req, res) {
+  util.updateAvail(req.body)
 })
+
 
 
 /***********************************
@@ -84,31 +108,13 @@ app.get('/logout',function(req,res){
 app.get('/auth/soundcloud/callback',
   passport.authenticate('soundcloud', { failureRedirect: '/login', successRedirect: '/' }),
   function(req, res){
-    //stash res token in session db.
+    res.send()
     res.redirect('/');
   });
 
 /**********************************
         middleware auth check
 ***********************************/
-
-
-//Auth routes
-
-app.get('/auth/soundcloud',
-  passport.authenticate('soundcloud'),
-  function(req, res){
-    // The request will be redirected to SoundCloud for authentication, so this
-    // function will not be called.
-  });
-
-app.get('/auth/soundcloud/callback',
-  passport.authenticate('soundcloud', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
-
-//middleware auth check
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }

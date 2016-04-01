@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
     //Create Users Table
     knex.schema.createTable('Journeymen', function(table) {
       table.increments('id').primary();
+      table.string('soundcloud_id');
       table.string('firstname');
       table.string('lastname');
       table.string('email');
@@ -25,7 +26,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('Sessions', function(table) {
       table.increments('id').primary();
       table.integer('journeyman_id').references('id').inTable('Journeymen');
-      table.string('jwt');
+      table.string('session_token');
     }),
 
     //Create Availability Table

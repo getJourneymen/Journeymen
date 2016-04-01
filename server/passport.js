@@ -2,6 +2,7 @@ var passport = require('passport');
 var auth = require('./auth');
 var SoundCloudStrategy = require('passport-soundcloud').Strategy;
 var session = require('express-session');
+var util = require('./utilities');
 
 module.exports = function(app,express){
 
@@ -13,6 +14,8 @@ app.use(session({
 app.use(passport.initialize());
 
 app.use(passport.session());
+
+var user = {};
 
 passport.serializeUser(function(user, done){
 //return something from the user--maybe id.
@@ -29,17 +32,12 @@ passport.use(new SoundCloudStrategy({
     clientSecret:auth.soundCloud_secret,
     callbackURL: "http://127.0.0.1:8080/auth/soundcloud/callback"
   },
-    function(accessToken, refreshToken, profile, done) {
-    //database function to find user record or create and store record
-      User.findOrCreate({ oauthID: profile.id }, function(err, user) {
-        if(err) console.log(err); 
-        if (!err && user != null) done(null, user);
-        else {
-          var user = new User()
-         //create user profile and stash in database;
-       }
-      return done(null,user);
-    });
-  }));
-
-}
+    function(accessToken, refreshToken, params, profile, done) {
+     console.log('accessToken:', accessToken);
+     console.log('refreshToken:', refreshToken);
+     console.log('params:', params);
+     user.access = params.accessToken;
+     user.name = profile.full_name;
+     return done(null,user);
+   }));
+};
