@@ -19,7 +19,6 @@ exports.up = function(knex, Promise) {
       table.integer('journeyman_id').references('id').inTable('Journeymen');
       table.string('token');
       table.string('service');
-      table.integer('journeyman_id');
     }),
 
     //Create Sessions Table
