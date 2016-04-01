@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var path = require('Path');
 var logout = require('express-passport-logout')
 var auth = require('./auth');
-//var db = require('db');
+var db = require('./db.js');
 
 //npm install express-passport-logout --save
 //
@@ -42,7 +42,7 @@ app.get('/',function(req,res){
 })
 
 /*
-format for 'search' req body--{query:{instrument:,date:,location:}} 
+format for 'search' req body--{query:{instrument:,date:,location:}}
 */
 
 app.get('/search', function(req,res){
