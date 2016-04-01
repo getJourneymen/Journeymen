@@ -72,7 +72,7 @@ format for 'profile' req body--{profile: {name:,instrument:,avail:}}
    start: DateTime, end: DateTime, instrument: string }}
 **********************************/
 
-app.post('signup', function(req, res) {
+app.post('/signup', function(req, res) {
   util.createUser(req.body)
 })
 app.post('/avail', function(req, res) {
