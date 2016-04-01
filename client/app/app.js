@@ -1,5 +1,6 @@
 angular.module('JourneymenApp', [
     'ui.router',
+    'ui.bootstrap'
     //modules placeholder
     // 'JourneymenApp.auth',
     // 'JourneymenApp.user',
@@ -8,7 +9,7 @@ angular.module('JourneymenApp', [
 .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('signin', {
-            url: '/sigin',
+            url: '/signin',
             templateUrl: '../auth/signin.html',
             //controller: ,//fill AuthController
             authenticate: false
@@ -27,33 +28,33 @@ angular.module('JourneymenApp', [
         })
         .state('profile', {
             url: '/profile',
-            templateUrl: '../user/profile.html'
+            templateUrl: '../user/profile.html',
             //controller: ,//fill
             authenticate: true
         })
-        .state('edit', {
-            url: '/editprofile',
-            templateUrl: '../user/editprofile.html'
+        .state('profile-edit', {
+            url: '/profile/:username/edit',//add userid to url
+            templateUrl: '../user/editprofile.html',
             //controller: ,//fill
             authenticate: true
         })
         .state('setavail', {
-            url: '/setavail',
-            templateUrl: '../user/setavail.html'
+            url: '/profile/:username/setavail',
+            templateUrl: '../user/setavail.html',
             //controller: ,//fill
             authenticate: true
         })
     $urlRouterProvider.otherwise("/signin");
 });
-//prevent transition if not authenticated
-.run(function($rootScope, $state, AuthService){
-	$rootScope.$on('$stateChangeStart', function(event,toState, toParams,fromState,fromParams){
-		if(toState.authenticate && !AuthService.isAuthenticated()){
-			$state.transitionTo('login');
-			event.preventDefault();
-		}
-	})
-})
+// //prevent transition if not authenticated
+// .run(function($rootScope, $state, AuthService){
+// 	$rootScope.$on('$stateChangeStart', function(event,toState, toParams,fromState,fromParams){
+// 		if(toState.authenticate && !AuthService.isAuthenticated()){
+// 			$state.transitionTo('login');
+// 			event.preventDefault();
+// 		}
+// 	})
+// })
 
 
 
