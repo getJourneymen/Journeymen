@@ -4,6 +4,9 @@ module.exports = {
     client: 'postgresql',
     connection: {
       database: 'journeymen_dev'
+    },
+    seeds: {
+      directory: './seeds'
     }
   }
 }
