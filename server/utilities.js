@@ -4,10 +4,10 @@ var db          = require('knex')(config[env]);
 
 var util = module.exports;
 
-
 // get Request Utilities
 util.getUser = function(obj) {
-  db.select(obj).from("Journeymen")
+  db.select().from("Journeymen")
+    .where()
     .then(function(rows) {
     return rows[0];
     });
@@ -31,6 +31,14 @@ util.searchUsers = function(obj) {
 //Post Request Utilities
 util.createUser = function(obj) {
   return db('Journeymen').insert(obj);
+}
+
+util.createSession = function(obj) {
+  return db('Sessions').insert(obj);
+}
+
+util.createAvail = function(obj) {
+  return db('Availability').insert(obj)
 }
 
 
