@@ -12,7 +12,7 @@ var util = require('./utilities.js');
 var app = express();
 
 
-app.use(express.static('./client'));
+app.use(express.static(path(__dirname+'/../client'));
 app.use(function(req, res, next) {
 res.header("Access-Control-Allow-Origin", "*");
 res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -35,7 +35,7 @@ app.get('/login', passport.authenticate('soundcloud'));
   3. Logout
 ******************************************/
 app.get('/',function(req,res){
-  res.sendFile('/index.html')
+  res.sendFile(path.resolve(__dirname+'/../client/index.html'));
 })
 app.get('/search', function(req,res){
   util.searchUsers(req.body.query)
@@ -72,7 +72,7 @@ format for 'profile' req body--{profile: {name:,instrument:,avail:}}
    start: DateTime, end: DateTime, instrument: string }}
 **********************************/
 
-app.post('signup', function(req, res) {
+app.post('/signup', function(req, res) {
   util.createUser(req.body)
 })
 app.post('/avail', function(req, res) {
