@@ -3,16 +3,16 @@ module.exports = function(grunt) {
   Run 'grunt' in a terminal tab
   Run 'grunt launch' in a second tab
 ​
-​
+
   DISCLAIMER: This grunt file will deal with initial setup of the database.
     In order for it to work after the database exists, you must just use
   npm start or delete the whole thing.
   */
-​
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     jshint: {
-      files: ['Gruntfile.js', 'server/*.js','server/**/*.js'], //'client/app/*.js', 'client/app/**/*.js',
+      files: ['Gruntfile.js', 'server/*.js','server/**/*.js'],
       options: {
          asi: true,
         laxbreak: true,
@@ -46,7 +46,7 @@ module.exports = function(grunt) {
         cmd: 'node server/db.js'
       },
       seed_db: {
-        cmd: 'node seeds/seed_journeymen.js'
+        cmd: 'knex seed:run'
       },
       launch_app: {
         cmd: 'npm start'
@@ -60,16 +60,16 @@ module.exports = function(grunt) {
       test: {
         files: [
           {expand: true, cwd: 'test/fixtures', src: ['**/*.js'], dest: 'test/actual/', ext: '.js'}
-        ]
-      }
-    }
-  });
-​
+        ]}
+     }
+   });
+
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-fixmyjs');
-​
+
   grunt.registerTask('default',  ['jshint', 'exec:init_db', 'exec:run_db']);
-  grunt.registerTask('launch',   ['exec:config_db', 'exec:init_schemas', 'exec:seed_db', 'exec:launch_app']);
+  grunt.registerTask('launch',   ['exec:config_db', 'exec:seed_db', 'exec:launch_app']);
+  grunt.registerTask('drop', ['exec:drop_db']);
 };

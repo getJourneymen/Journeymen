@@ -30,7 +30,7 @@ exports.up = function(knex, Promise) {
     }),
 
     //Create Availability Table
-    knex.schema.createTable('Availabilty', function(table) {
+    knex.schema.createTable('Availability', function(table) {
       table.increments('id').primary();
       table.integer('journeyman_id').references('id').inTable('Journeymen');
       table.dateTime('start');
@@ -46,6 +46,6 @@ exports.down = function(knex, Promise) {
     knex.schema.dropTable('Journeymen'),
     knex.schema.dropTable('Auth'),
     knex.schema.dropTable('Sessions'),
-    knex.schema.dropTable('Availabilty')
+    knex.schema.dropTable('Availability')
   ])
 }

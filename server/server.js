@@ -12,7 +12,7 @@ var util = require('./utilities.js');
 var app = express();
 
 
-app.use(express.static(path(__dirname+'/../client'));
+app.use(express.static(path(__dirname+'/../client')));
 app.use(function(req, res, next) {
 res.header("Access-Control-Allow-Origin", "*");
 res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
