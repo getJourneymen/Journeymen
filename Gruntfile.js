@@ -12,7 +12,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     jshint: {
-      files: ['Gruntfile.js', 'server/*.js','server/**/*.js'],
+      files: ['Gruntfile.js', 'server/*.js','server/**/*.js','client/app/**/*.js'],
       options: {
          asi: true,
         laxbreak: true,
@@ -37,7 +37,10 @@ module.exports = function(grunt) {
         cmd: 'postgres -D journeymen_dev/'
       },
       drop_db: {
-        cmd: 'dropdb journeymen_dev/'
+        cmd: 'dropdb journeymen_dev'
+      },
+      rm_dir: {
+        cmd: 'rmdir journeymen_dev'
       },
       config_db: {
         cmd: 'createdb journeymen_dev'
@@ -49,7 +52,7 @@ module.exports = function(grunt) {
         cmd: 'knex seed:run'
       },
       launch_app: {
-        cmd: 'npm start'
+        cmd: 'nodemon server/server.js'
       }
     },
     fixmyjs: {
@@ -69,7 +72,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-fixmyjs');
 
-  grunt.registerTask('default',  ['jshint', 'exec:init_db', 'exec:run_db']);
-  grunt.registerTask('launch',   ['exec:config_db', 'exec:seed_db', 'exec:launch_app']);
-  grunt.registerTask('drop', ['exec:drop_db']);
+  grunt.registerTask('default',  ['jshint', 'exec:init_db', 'exec:run_db','exec:seed_db']);
+  grunt.registerTask('launch',   ['exec:config_db', 'exec:launch_app']);
+  grunt.registerTask('drop', ['exec:drop_db', 'exec:rm_dir']);
 };
