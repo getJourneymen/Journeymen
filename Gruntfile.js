@@ -73,6 +73,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-fixmyjs');
 
   grunt.registerTask('default',  ['jshint', 'exec:init_db', 'exec:run_db','exec:seed_db']);
-  grunt.registerTask('launch',   ['exec:config_db', 'exec:launch_app']);
+  grunt.registerTask('launch',   ['jshint', 'exec:config_db', 'exec:launch_app']);
   grunt.registerTask('drop', ['exec:drop_db', 'exec:rm_dir']);
 };
