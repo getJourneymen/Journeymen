@@ -7,9 +7,3 @@ module.exports = knex;
 
 knex.migrate.latest([config]);
 
-exports.fetchUser = function(obj) {
-  var user = db.select().from("Journeymen")
-    .then(function(rows) {
-    console.log("user data: ", rows);
-    })
-}

@@ -1,9 +1,9 @@
 var express = require('express');
 var passport = require('passport');
 var bodyParser = require('body-parser');
-var path = require('Path');
+var path = require('path');
 var logout = require('express-passport-logout')
-var auth = require('./auth');
+// var auth = require('./auth');
 var db = require('./db.js');
 var util = require('./utilities.js');
 
@@ -12,7 +12,7 @@ var util = require('./utilities.js');
 var app = express();
 
 
-app.use(express.static(path(__dirname+'/../client'));
+app.use(express.static(path.join(__dirname+'/../client')));
 app.use(function(req, res, next) {
 res.header("Access-Control-Allow-Origin", "*");
 res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
