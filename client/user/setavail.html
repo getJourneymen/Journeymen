@@ -1,17 +1,17 @@
 <div class="availability" ng-controller="AvailCtlr">
-  <form name="availability" ng-submit="setAvailability()">
-    <div class="input-group">
-      <label for="start">Start</label>
-      <input type="datetime" name="start" ng-model="start">
-    </div>
-    <div class="input-group">
-      <label for="end">End</label>
-      <input type="datetime" name="end" ng-model="end">
-    </div>
-    <div class="input-group">
-      <label for="instruments"></label>
-      <select class="instrumentSel" name="instrumentSel" ng-model="instrument">
-        <option ng-repeat="intrument in instruments" value="instrument.id">{{instrument.name}}</option>
-      </select>
-    </div>
-  </div>
+    <form name="availability" ng-submit="setAvailability()">
+        <div class="input-group">
+            <label for="start">Start</label>
+            <input type="datetime" name="start" ng-model="start">
+        </div>
+        <div class="input-group">
+            <label for="end">End</label>
+            <input type="datetime" name="end" ng-model="end">
+        </div>
+        <div class="input-group">
+            <label for="instruments"></label>
+            <input type="checkbox" required class="instrumentSel" name="instrumentSel" ng-model="instrument">
+            <option ng-repeat="intrument in instruments" value="instrument.id">{{instrument.name}}</option>
+        </div>
+    </form>
+</div>
