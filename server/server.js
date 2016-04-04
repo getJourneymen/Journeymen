@@ -68,7 +68,7 @@ format for 'profile' req body--{profile: {name:,instrument:,avail:}}
         Post Requests
 1. New User Format should be req.body ----{user:{firstname: string,
    lastname: string, email: string, instrument: string}}
-2. New Availability Format should be req.body ----{time:{journeymen_id: integer,
+2. New Availability Format should be req.body ----{time:{auth_token: integer,
    start: DateTime, end: DateTime, instrument: string }}
 **********************************/
 
@@ -89,7 +89,7 @@ app.post('/avail', function(req, res) {
 /**********************************
   Update Information
 ***********************************/
-app.put('/account',function(req,res){
+app.put('/user',function(req,res){
   util.updateUser(req.body)
     .then(function(something) {
       console.log('whatever update query returns:', something);
