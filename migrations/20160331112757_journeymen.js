@@ -18,7 +18,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('Auth', function(table) {
       table.increments('id').primary();
       table.integer('journeyman_id').references('id').inTable('Journeymen');
-      table.string('token');
+      table.string('auth_token');
       table.string('service');
     }),
 

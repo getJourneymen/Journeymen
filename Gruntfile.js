@@ -40,13 +40,13 @@ module.exports = function(grunt) {
         cmd: 'dropdb journeymen_dev'
       },
       rm_dir: {
-        cmd: 'rmdir journeymen_dev'
+        cmd: 'rm -rf journeymen_dev'
       },
       config_db: {
         cmd: 'createdb journeymen_dev'
       },
       init_schemas: {
-        cmd: 'node server/db.js'
+        cmd: 'knex migrate:latest'
       },
       seed_db: {
         cmd: 'knex seed:run'
@@ -72,7 +72,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-fixmyjs');
 
-  grunt.registerTask('default',  ['jshint', 'exec:init_db', 'exec:run_db','exec:seed_db']);
-  grunt.registerTask('launch',   ['jshint', 'exec:config_db', 'exec:launch_app']);
-  grunt.registerTask('drop', ['exec:drop_db', 'exec:rm_dir']);
+  grunt.registerTask('startdb',  ['jshint', 'exec:init_db', 'exec:run_db']);
+  grunt.registerTask('seeddb',   ['jshint', 'exec:config_db','exec:init_schemas','exec:seed_db']);
+  grunt.registerTask('dropdb', ['exec:drop_db']);
 };
