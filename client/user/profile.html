@@ -1,10 +1,12 @@
-<div class="profile" ng-controller="ProfileCtlr">
-<div><img src="{{pic}}" alt="Photo of {{first last}}"></div>
+<div class="profile" ng-controller="ProfileCtlr" ng-model="user">
+<div><img src="{{pic}}" alt="Photo of {{first}} {{last}}"></div>
 <div>
-  <h2>{{first last}}</h2>
+  <h2>{{first}} {{last}}</h2>
+  <h5>{{email}}</h5>
   {{description}}
-  <p>
-    Instruments: {{instruments}}
-  </p>
+  <p>Instruments:</p>
+    <div class="userInstruments">
+    <li ng-repeat="(key, instrument) in instruments" ng-model="instruments" ng-value="key">{{instruments[key]}}</li>
+ </div>
   <a href="#">Check availability</a>
 </div>
