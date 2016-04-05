@@ -6,53 +6,46 @@ var util = module.exports;
 
 // get Request Utilities
 util.getUser = function(obj) {
-  db.select().from("Journeymen")
-    .where()
+return db.select().from("journeymen")
+    .where('soundcloud_id', '=', obj.id)
     .then(function(rows) {
     return rows[0];
     });
 }
 
 util.searchUsers = function(obj) {
-  return db.from("Availability").join('Journeymen')
-    .where('Availability.journeymen_id', '=', 'Journeymen.id')
-    .select()
-    .where('Availability.instrument','=', 'obj.instrument')
-    .andwhere('Availability.start', '<', 'obj.start' )
-    .andWhere('Availability.end', '>', 'obj.end');
+  console.log('obj:', obj.start);
+  return db.from('availability').innerJoin('journeymen','soundcloud_id', 'availability.user_id')
+    .where('availability.instrument','=', obj.instrument)
+    .andWhere('availability.start', '<', obj.start)
+    .andWhere('availability.end', '>', obj.end)
+    .select();
 }
-
-
-
-
-
 
 
 //Post Request Utilities
 util.createUser = function(obj) {
-  return db('Journeymen').insert(obj);
+  return db('journeymen').insert(obj);
 }
 
 util.createSession = function(obj) {
-  return db('Sessions').insert(obj);
+  return db('sessions').insert(obj);
 }
 
 util.createAvail = function(obj) {
-  return db('Availability').insert(obj)
+  return db('availability').insert(obj)
 }
-
-
-
-
-
-
-
-
-
 
 
 
 //Put Request Utilities
 util.updateUser = function(obj) {
-  return db('Journeymen').where({id:obj.id}).update(obj);
+  return db('journeymen').where({id:obj.id}).update(obj);
+}
+
+
+//Delete Request
+
+util.removeUser = function(obj){
+  db('auth').where('obj.id','=', 'soundcloud_id').del();
 }
