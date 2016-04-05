@@ -1,18 +1,19 @@
 angular.module('JourneymenApp')
-    .controller('AvailCtlr', function($scope, $state, 'AvailSvc', 'AuthSvc') {
+    .controller('AvailCtlr', function($scope, $state, AvailSvc, AuthSvc, InstrSvc) {
         $scope.start = '';
         $scope.end = '';
-        $scope.instrument = {}; //What is the return format from the form checkboxes?
+        $scope.instruments = InstrSvc.getInstruments();
+        $scope.selectedInstruments = { ids: [] };
 
         $scope.setAvailability = function() {
-            AvailSvc.setAvail({
+            AvailSvc.setAvail(JSON.stringify({
                     time: {
-                        authToken: AuthSvc.retrieveToken(),
+                        auth_token: AuthSvc.retrieveToken(),
                         start: $scope.start,
                         end: $scope.end,
-                        instrument: $scope.instrument
+                        instrument: $scope.selectedInstruments.ids
                     }
-                })
+                }))
                 .then(function(res) {
                     console.log('Successfully set availibility: ', res.statusText);
                     $state.go('profile');
