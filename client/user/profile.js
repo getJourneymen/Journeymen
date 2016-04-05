@@ -1,53 +1,35 @@
 angular.module('JourneymenApp')
-    .controller('ProfileCtlr', function($scope,$state, 'ProfileSvc','AvailSvc') {
-        $scope.pic;
-        $scope.first = '';
-        $scope.last = '';
-        $scope.description = '';
+    .controller('ProfileCtlr', function($scope, $state, ProfileSvc, AuthSvc, InstrSvc) {
 
-        $scope.first = ProfileSvc.extractName.firstname; //may need to edit access
-        $scope.last = ProfileSvc.extractName.lastname; //may need to edit access
-        $scope.pic = ProfileSvc.extractPic;
-
-        $scope.editProfile = function(){
-        	//create user and set avail?
-        }
-
+        ProfileSvc.retrieveProfile(AuthSvc.retrieveID())
+            .then(function(profileData) {
+                $scope.pic = profileData.img_url;
+                $scope.first = profileData.first_name;
+                $scope.last = profileData.last_name;
+                $scope.email = profileData.email;
+                $scope.description = profileData.description;
+                $scope.instruments = InstrSvc.findInstruments(profileData.instrument);
+            })
+            .catch(function() {
+                console.log('Error displaying data')
+            })
     })
     .factory('ProfileSvc', function($http) {
 
-        var soundCloudData = {};
-        var createUserUri = '/signup';
+        var getUserUri = '/user';
 
-        function extractName() {
-            return soundCloudData.name; //verify after return data confirmed
-        }
-
-        function extractPic() {
-            return soundCloudData.pic; //verify after return data confirmed
-        }
-
-        function retrieveProfile() {
-            //After Authentication , Auth factory should
-            //provide global access to current user (first, last, and pic)
-            //so here we would access Auth.currentUser (i.e)
-            soundCloudData = //equal to what auth factory provides
-        }
-
-        function storeUser(userData) {
-            $http.post(createUserUri, userData)
-                .then(function(res) {
-                    console.log('Successfully added user: ', res)
+        function retrieveProfile(soundCloudId) {
+            $http.get(getUserUri, soundCloudId)
+                .then(function(profileData) {
+                    console.log('Successfully retrieved profile');
+                    return JSON.parse(profileData)
                 })
                 .catch(function(err) {
-                    console.log('Error adding user: ', err)
+                    console.log('Error retrieving profile: ', err)
                 })
         }
 
         return {
-            retrieveProfile: retrieveProfile,
-            extractName: extractName,
-            extractPic: extractPic,
-            storeUser: storeUser,
+            retrieveProfile: retrieveProfile
         }
     });
