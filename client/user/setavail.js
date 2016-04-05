@@ -8,7 +8,7 @@ angular.module('JourneymenApp')
         $scope.setAvailability = function() {
             AvailSvc.setAvail(JSON.stringify({
                     time: {
-                        auth_token: AuthSvc.retrieveToken(),
+                        soundcloud_id: AuthSvc.retrieveID(),
                         start: $scope.start,
                         end: $scope.end,
                         instrument: $scope.selectedInstruments.ids
