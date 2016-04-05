@@ -15,16 +15,20 @@ app.use(passport.initialize());
 
 app.use(passport.session());
 
-var user = {};
-
 passport.serializeUser(function(user, done){
 //return something from the user--maybe id.
-  done(null, user);
+  done(null, user.id);
 });
 
 passport.deserializeUser(function(obj, done) {
-//db function to remove user from DB
-  done(null, obj);
+
+  util.getUser(obj)
+  .then(function(user){
+    done(null,user);
+  })
+  .catch(function(err){
+    console.error(err)
+  })
 });
 
 passport.use(new SoundCloudStrategy({
@@ -33,11 +37,24 @@ passport.use(new SoundCloudStrategy({
     callbackURL: "http://127.0.0.1:8080/auth/soundcloud/callback"
   },
     function(accessToken, refreshToken, params, profile, done) {
-     console.log('accessToken:', accessToken);
-     console.log('refreshToken:', refreshToken);
-     console.log('params:', params);
-     user.access = params.accessToken;
-     user.name = profile.full_name;
-     return done(null,user);
+    
+    db('Auth').insert({id: profile.id, auth_token: accessToken});
+    
+    util.getUser({id:profile.id})
+    .then(function(user){
+      done(null,user);
+    })
+    .catch(function(err){
+      var user = {
+        soundcloud_id: profile.id,
+        first_name: profile.firstname,
+        last_name: profile.lastname,
+        email: null,
+        instrument: null,
+        description: null,
+        img_url: profile.img_url
+      }
+      done(null,user);
+    })
    }));
 };

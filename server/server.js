@@ -6,6 +6,7 @@ var logout = require('express-passport-logout')
 // var auth = require('./auth');
 var db = require('./db.js');
 var util = require('./utilities.js');
+var qs = require('qs');
 
 //npm install express-passport-logout --save
 
@@ -37,31 +38,41 @@ app.get('/login', passport.authenticate('soundcloud'));
 app.get('/',function(req,res){
   res.sendFile(path.resolve(__dirname+'/../client/index.html'));
 })
+
 app.get('/search', function(req,res){
-  util.searchUsers(req.body.query)
+ var queryString = req.query;
+ console.log('querystring:', queryString);
+  util.searchUsers(queryString)
     .then(function(rows) {
-      return rows;
+      res.send(rows);
     });
-  res.send({response: 'you did it'})
+
 })
+
 app.get('/logout',function(req,res){
   req.logout();
   res.redirect('/');
+})
+
+app.get('/avail', ensureAuthenticated, function(req,res){
+  //db function to get avail of user;
 })
 
 /*
 format for 'profile' req body--{profile: {name:,instrument:,avail:}}
 */
 
-// app.get('/account', ensureAuthenticated, function(req,res){
-//   util.getUser(req.body)
-//   .then(function(row){
-//     res.send(row);
-//   })
-//   .catch(function(err){
-//     console.error(err)
-//   })
-// })
+app.get('/user', function(req,res){
+  var queryString = req.query;
+  console.log('querystring:', queryString);
+   return util.getUser(queryString)
+   .then(function(row){
+     res.send(row);
+  })
+   .catch(function(err){
+    console.error(err)
+  })
+})
 
 
 /**********************************
@@ -99,6 +110,17 @@ app.put('/avail', function(req, res) {
   util.updateAvail(req.body)
 })
 
+/****
+logout route
+******/
+
+app.delete('/logout',function(req,res){
+  util.removeUser(req.body.id);
+  req.user = null;
+  req.passport.session.user = null;
+  res.redirect('/');
+})
+
 
 
 /***********************************
@@ -108,6 +130,9 @@ app.put('/avail', function(req, res) {
 app.get('/auth/soundcloud/callback',
   passport.authenticate('soundcloud', { failureRedirect: '/login', successRedirect: '/' }),
   function(req, res){
+    console.log('req.body:', req.body);
+    console.log('req.user:', req.user);
+    console.log('req.passport.session.user:', req.passport.session.user);
     res.send()
     res.redirect('/');
   });
