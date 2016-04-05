@@ -2,6 +2,7 @@ angular.module('JourneymenApp', [
     'ui.router',
     'ui.bootstrap',
     'checklist-model'
+
     //modules placeholder
     // 'JourneymenApp.auth',
     // 'JourneymenApp.user',
@@ -18,31 +19,31 @@ angular.module('JourneymenApp', [
         .state('search', {
             url: '/search',
             templateUrl: '../search/search.html',
-            //controller: ,//fill
+            controller: 'SearchCtlr',
             authenticate: true
         })
         .state('results', {
             url: '/results',
             templateUrl: '../search/results.html',
-            //controller: ,//fill
+            controller: 'SearchCtlr',
             authenticate: true
         })
         .state('profile', {
             url: '/profile',
             templateUrl: '../user/profile.html',
-            //controller: ,//fill
+            controller: 'ProfileCtlr',
             authenticate: true
         })
         .state('profile-edit', {
             url: '/profile/:username/edit',//add userid to url
             templateUrl: '../user/editprofile.html',
-            //controller: ,//fill
+            controller: 'EditprofileCtlr',
             authenticate: true
         })
         .state('setavail', {
             url: '/profile/:username/setavail',
             templateUrl: '../user/setavail.html',
-            //controller: ,//fill
+            controller: 'AvailCtlr',
             authenticate: true
         })
     $urlRouterProvider.otherwise("/signin");
