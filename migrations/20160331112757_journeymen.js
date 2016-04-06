@@ -7,6 +7,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('journeymen', function(table) {
       table.increments('id').primary();
       table.integer('soundcloud_id').unique();
+      table.string('username');
       table.string('first_name');
       table.string('last_name');
       table.string('email');

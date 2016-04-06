@@ -43,7 +43,7 @@ passport.use(new SoundCloudStrategy({
     
     //db('Auth').insert({id: profile.id, auth_token: accessToken});
     //console.log('accessToken:', accessToken)
-    //console.log(profile)
+    console.log(profile)
     return util.getUser({id:profile.id})
     .then(function(user){
       if(user){
@@ -54,13 +54,14 @@ passport.use(new SoundCloudStrategy({
       // console.log('making user')
       
       var userProfile = {
-                        'soundcloud_id': profile.id,
-                        'first_name': profile._json.first_name,
-                        'last_name': profile._json.last_name,
-                        'email': '',
-                        'instrument': '',
-                        'description': '',
-                        'img_url': profile._json.avatar_url
+                        soundcloud_id: profile.id,
+                             username: profile._json.username,
+                           first_name: profile._json.first_name,
+                            last_name: profile._json.last_name,
+                                email: '',
+                           instrument: '',
+                          description: '',
+                              img_url: profile._json.avatar_url
                         }
       // console.log(userProfile);
       

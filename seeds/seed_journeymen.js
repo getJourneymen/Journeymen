@@ -6,16 +6,19 @@ exports.seed = function(knex, Promise) {
 
     // Inserts seed entries
     knex('journeymen').insert({           
-                                soundcloud_id: 12345, 
+                                soundcloud_id: 12345,
+                                     username: 'Raekwon', 
                                    first_name: 'John', 
-    	                            last_name: 'Doe', 
+    	                              last_name: 'Doe', 
                                         email: 'email@email.com',
-    	                           instrument: '[1]',
+    	                             instrument: '[1]',
                                   description: 'about me'
                            }),
     
-    knex('journeymen').insert({          
+    knex('journeymen').insert({   
+
                                 soundcloud_id: 12346, 
+                                     username: 'GZA',
                                    first_name: 'Frankie', 
                                     last_name: 'Vithayathil', 
                                         email: 'email@gmail.com',
@@ -24,7 +27,8 @@ exports.seed = function(knex, Promise) {
                             }),
     
     knex('journeymen').insert({         
-                                soundcloud_id: 12347, 
+                                soundcloud_id: 12347,
+                                     username: 'RZA', 
                                    first_name: 'Feben', 
                                     last_name: 'Austin', 
                                         email: 'email@hmail.com',
