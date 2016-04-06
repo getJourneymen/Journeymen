@@ -7,7 +7,7 @@ var util = module.exports;
 // get Request Utilities
 util.getUser = function(obj) {
 return db.select().from("journeymen")
-    .where('soundcloud_id', '=', obj.id)
+    .where('soundcloud_id', '=', obj.soundcloud_id)
     .then(function(rows) {
     return rows[0];
     });
@@ -17,8 +17,8 @@ util.searchUsers = function(obj) {
   console.log('obj:', obj.start);
   return db.from('availability').innerJoin('journeymen','soundcloud_id', 'availability.user_id')
     .where('availability.instrument','=', obj.instrument)
-    .andWhere('availability.start', '<', obj.start)
-    .andWhere('availability.end', '>', obj.end)
+    .andWhere('availability.start', '<=', obj.start)
+    .andWhere('availability.end', '>=', obj.end)
     .select();
 }
 
@@ -40,12 +40,16 @@ util.createAvail = function(obj) {
 
 //Put Request Utilities
 util.updateUser = function(obj) {
-  return db('journeymen').where({id:obj.id}).update(obj);
+  return db('journeymen').where('soundcloud_id', '=', obj.soundcloud_id).update(obj);
 }
 
 
-//Delete Request
+//Auth table Utilities
 
-util.removeUser = function(obj){
-  db('auth').where('obj.id','=', 'soundcloud_id').del();
+util.addAuth = function(obj){
+  db('auth').insert(obj);
+}
+
+util.removeAuth = function(obj){
+  db('auth').where('user_id','=', obj.soundcloud_id).del();
 }

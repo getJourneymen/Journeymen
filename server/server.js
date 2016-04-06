@@ -55,6 +55,7 @@ app.get('/search', function(req,res){
 })
 
 app.get('/logout',function(req,res){
+  util.removeAuth(req.user);
   req.logout();
   res.redirect('/');
 })
@@ -68,8 +69,8 @@ app.get('/avail', ensureAuthenticated, function(req,res){
 */
 
 app.get('/user', function(req,res){
-  //console.log('req.user:', req.user);
-  return util.getUser({id: req.user.soundcloud_id})
+  console.log('req.user:', req.user);
+  return util.getUser(req.user)
    .then(function(row){
      res.send(row);
   })
@@ -114,10 +115,10 @@ app.put('/avail', function(req, res) {
 *logout route
 **/
 
-app.delete('/logout',function(req,res){
-  util.removeUser(req.body.id);
-  res.redirect('/');
-})
+// app.delete('/logout',function(req,res){
+//   util.removeUser(req.body.id);
+//   res.redirect('/');
+// })
 
 
 

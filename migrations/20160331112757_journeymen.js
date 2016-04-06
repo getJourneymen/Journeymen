@@ -22,7 +22,6 @@ exports.up = function(knex, Promise) {
       table.increments('id').primary();
       table.integer('user_id').references('soundcloud_id').inTable('journeymen');
       table.string('auth_token');
-      table.string('service');
     }),
 
     //Create Sessions Table
