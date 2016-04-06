@@ -60,10 +60,8 @@ app.get('/logout',function(req,res){
   res.redirect('/');
 })
 
-app.get('/avail', function(req,res){
-  var query = req.query
-  console.log('query:', query);
-  return util.getAvail(query)
+app.get('/avail', ensureAuthenticated, function(req,res){
+  return util.getAvail(req.user)
     .then(function(row){
       return res.send(row);
     })
