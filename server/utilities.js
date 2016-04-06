@@ -13,9 +13,18 @@ return db.select().from("journeymen")
     });
 }
 
+util.getAvail = function(obj){
+  return db.select().from('availability')
+         .where('user_id', '=', obj.soundcloud_id)
+         .then(function(row){
+          return row;
+         })
+}
+
 util.searchUsers = function(obj) {
   console.log('obj:', obj.start);
-  return db.from('availability').innerJoin('journeymen','soundcloud_id', 'availability.user_id')
+  return db.from('availability')
+    .innerJoin('journeymen','soundcloud_id', 'availability.user_id')
     .where('availability.instrument','=', obj.instrument)
     .andWhere('availability.start', '<=', obj.start)
     .andWhere('availability.end', '>=', obj.end)
@@ -36,11 +45,15 @@ util.createAvail = function(obj) {
   return db('availability').insert(obj)
 }
 
-
-
 //Put Request Utilities
 util.updateUser = function(obj) {
-  return db('journeymen').where('soundcloud_id', '=', obj.soundcloud_id).update(obj);
+  return db('journeymen')
+         .where('soundcloud_id', '=', obj.soundcloud_id).update(obj);
+}
+
+util.updateAvail = function(obj){
+  return db('availability')
+         .where('id', '=', obj.id).update(obj);
 }
 
 

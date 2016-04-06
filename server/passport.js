@@ -50,10 +50,8 @@ passport.use(new SoundCloudStrategy({
     .then(function(user){
       if(user){
       // console.log('user:', user);
-      // console.log('in then')
         return done(null,user);
       }else{
-      // console.log('making user')
       
         var userProfile = {
                           soundcloud_id: profile.id,
@@ -65,7 +63,6 @@ passport.use(new SoundCloudStrategy({
                             description: '',
                                 img_url: profile._json.avatar_url
                           } 
-      // console.log(userProfile);
       
         util.createUser(userProfile)
         .then(function(){

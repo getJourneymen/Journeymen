@@ -47,9 +47,9 @@ app.get('/',function(req,res){
 app.get('/search', function(req,res){
  var queryString = req.query;
  console.log('querystring:', queryString);
-  util.searchUsers(queryString)
+  return util.searchUsers(queryString)
     .then(function(rows) {
-      res.send(rows);
+      return res.send(rows);
     });
 
 })
@@ -60,8 +60,16 @@ app.get('/logout',function(req,res){
   res.redirect('/');
 })
 
-app.get('/avail', ensureAuthenticated, function(req,res){
-  //db function to get avail of user;
+app.get('/avail', function(req,res){
+  var query = req.query
+  console.log('query:', query);
+  return util.getAvail(query)
+    .then(function(row){
+      return res.send(row);
+    })
+    .catch(function(err){
+      console.error(err);
+    })
 })
 
 /*
@@ -69,10 +77,11 @@ app.get('/avail', ensureAuthenticated, function(req,res){
 */
 
 app.get('/user', function(req,res){
-  console.log('req.user:', req.user);
+  //console.log('req.user:', req.user);
   return util.getUser(req.user)
    .then(function(row){
-     res.send(row);
+    console.log('row:', row);
+     return res.send(row);
   })
    .catch(function(err){
     console.error(err)
@@ -88,11 +97,17 @@ app.get('/user', function(req,res){
    start: DateTime, end: DateTime, instrument: string }}
 **********************************/
 
-app.post('/signup', function(req, res) {
-  util.createUser(req.body)
-})
+// app.post('/signup', function(req, res) {
+//   util.createUser(req.body)
+// })
 app.post('/avail', function(req, res) {
-  util.createAvail(req.body)
+  return util.createAvail(req.body)
+    .then(function(){
+      return res.status(200).send('New availability was created!')
+    })
+    .catch(function(err){
+      return res.status(400).send({err: err});
+    })
 })
 
 /**********************************
@@ -100,14 +115,23 @@ app.post('/avail', function(req, res) {
 ***********************************/
 
 app.put('/user',function(req,res){
-  util.updateUser(req.body)
-    .then(function(something) {
-      console.log('whatever update query returns:', something);
+  return util.updateUser(req.body)
+    .then(function(){
+      return res.status(201).send('All updated');
+    })
+    .catch(function(err){
+      return res.status(400).send('Something went wrong');
     })
 })
 
 app.put('/avail', function(req, res) {
-  util.updateAvail(req.body)
+  return util.updateAvail(req.body)
+    .then(function(){
+      return res.status(200).send('All updated');
+    })
+    .catch(function(){
+      return res.status(400).send('Something went wrond');
+    })
 })
 
 /*
