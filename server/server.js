@@ -6,9 +6,8 @@ var logout = require('express-passport-logout')
 // var auth = require('./auth');
 var db = require('./db.js');
 var util = require('./utilities.js');
-var qs = require('qs');
+var cookieParser = require('cookie-parser');
 
-//npm install express-passport-logout --save
 
 var app = express();
 
@@ -19,22 +18,28 @@ res.header("Access-Control-Allow-Origin", "*");
 res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 next();
 });
+
+app.use(cookieParser('kitkat'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded ({extended:true}));
+
+//configAuth--sets up passport sessions--function in passport.js
 
 var configAuth = require('./passport')(app,express);
 
 /********************************
         app endpoint routes
 *********************************/
+
 app.get('/login', passport.authenticate('soundcloud'));
 
 /*****************************************
             Get Requests
   1. Serve index.html
-  2. Search Format : req.body --{query: {instrument: string, date: string, location:string}}
+  2. Search Format : req.body --{query: {instrument: string, start: string, end:string}}
   3. Logout
 ******************************************/
+
 app.get('/',function(req,res){
   res.sendFile(path.resolve(__dirname+'/../client/index.html'));
 })
@@ -59,13 +64,12 @@ app.get('/avail', ensureAuthenticated, function(req,res){
 })
 
 /*
-format for 'profile' req body--{profile: {name:,instrument:,avail:}}
+*format for 'profile' req body--{profile: {name: string, instrument: array of numbers,avail:}}
 */
 
 app.get('/user', function(req,res){
-  var queryString = req.query;
-  console.log('querystring:', queryString);
-   return util.getUser(queryString)
+  //console.log('req.user:', req.user);
+  return util.getUser({id: req.user.soundcloud_id})
    .then(function(row){
      res.send(row);
   })
@@ -90,34 +94,28 @@ app.post('/avail', function(req, res) {
   util.createAvail(req.body)
 })
 
-
-
-
-
-
-
-
 /**********************************
-  Update Information
+        Update Information
 ***********************************/
+
 app.put('/user',function(req,res){
   util.updateUser(req.body)
     .then(function(something) {
       console.log('whatever update query returns:', something);
     })
 })
+
 app.put('/avail', function(req, res) {
   util.updateAvail(req.body)
 })
 
-/****
-logout route
-******/
+/*
+*
+*logout route
+**/
 
 app.delete('/logout',function(req,res){
   util.removeUser(req.body.id);
-  req.user = null;
-  req.passport.session.user = null;
   res.redirect('/');
 })
 
@@ -128,13 +126,11 @@ app.delete('/logout',function(req,res){
 ***********************************/
 
 app.get('/auth/soundcloud/callback',
-  passport.authenticate('soundcloud', { failureRedirect: '/login', successRedirect: '/' }),
+  passport.authenticate('soundcloud',{ successRedirect: '/user', failureRedirect: '/login'}),
   function(req, res){
-    console.log('req.body:', req.body);
-    console.log('req.user:', req.user);
-    console.log('req.passport.session.user:', req.passport.session.user);
-    res.send()
-    res.redirect('/');
+    //console.log('req.user:', req.user);
+    // console.log('req.session.passport.user:', req.session.passport.user);
+  //res.redirect('/user');
   });
 
 /**********************************
@@ -143,7 +139,7 @@ app.get('/auth/soundcloud/callback',
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
+  res.status(401).send({err: 'Authentication failed.'})
 }
 
 app.listen(8080);
