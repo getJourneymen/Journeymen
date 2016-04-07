@@ -1,6 +1,10 @@
 {
   "name": "getJourneymen",
   "version": "0.0.1",
+  "description": "The Journeymen app will let freelance musicians connect with groups or other musicians looking to book them for gigs.",
+  "repository": { "type": "git",
+                  "url": "https://github.com/getJourneymen/Journeymen"
+                },
   "main": "server/server.js",
   "author": "getJourneymen",
   "dependencies": {
@@ -9,13 +13,16 @@
     "express": "^4.13.4",
     "express-passport-logout": "^0.1.0",
     "express-session": "^1.13.0",
+    "passport": "^0.3.2",
     "passport-soundcloud": "^0.1.2",
     "path": "^0.12.7",
-    "pg": "^4.4.0",
     "request": "^2.34.0"
   },
   "scripts": {
-    "start": "./node_modules/.bin/nodemon server/index.js --ignore node_modules/"
+    "postinstall": "bower install",
+    "pretest": "grunt build; grunt startdb; grunt seeddb",
+    "start": "node server/server.js",
+    "test": "NODE_ENV=development ./node_modules/.bin/nodemon server/server.js --ignore node_modules/"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
