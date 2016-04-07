@@ -152,7 +152,7 @@ app.delete('/logout',function(req,res){
 ***********************************/
 
 app.get('/auth/soundcloud/callback',
-  passport.authenticate('soundcloud',{ successRedirect: '/user', failureRedirect: '/login'}),
+  passport.authenticate('soundcloud',{ successRedirect: '/', failureRedirect: '/'}),
   function(req, res){
     //console.log('req.user:', req.user);
     // console.log('req.session.passport.user:', req.session.passport.user);
