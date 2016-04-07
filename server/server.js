@@ -37,7 +37,7 @@ app.get('/login', passport.authenticate('soundcloud'));
 /*****************************************
             Get Requests
   1. Serve index.html
-  2. Search Format -- In Angular, build up a query string 
+  2. Search Format -- In Angular, build up a query string
      by setting the params property in the $http config object
      Ex. $http({
           method: 'GET',
@@ -45,7 +45,7 @@ app.get('/login', passport.authenticate('soundcloud'));
           params: {instrument: [1], start: 'timestamp', end: 'timestamp'})
         })
   3. Getting /avail and /user doesn't need querystring because req.body
-     will have been set by passport deserialize. We match with req.body.soundcloud_id 
+     will have been set by passport deserialize. We match with req.body.soundcloud_id
   4. Logout
 ******************************************/
 
