@@ -46,10 +46,10 @@ module.exports = function(grunt) {
         cmd: 'createdb journeymen_dev'
       },
       init_schemas: {
-        cmd: './node_modules/knex/knex.js migrate:latest'
+        cmd: 'node ./node_modules/knex/knex.js migrate:latest'
       },
       seed_db: {
-        cmd: './node_modules/knex/knex.js seed:run'
+        cmd: 'node ./node_modules/knex/knex.js seed:run'
       },
       launch_app: {
         cmd: 'nodemon server/server.js'
