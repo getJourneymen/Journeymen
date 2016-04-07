@@ -1,6 +1,8 @@
 {
   "name": "getJourneymen",
   "version": "0.0.1",
+  "description": "The Journeymen app will let freelance musicians connect with groups or other musicians looking to book them for gigs.",
+  "repository": "https://github.com/getJourneymen/Journeymen",
   "main": "server/server.js",
   "author": "getJourneymen",
   "dependencies": {
