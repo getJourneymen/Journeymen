@@ -20,8 +20,8 @@
   "scripts": {
     "postinstall": "bower install",
     "test": "NODE_ENV=development ./node_modules/.bin/nodemon server/server.js --ignore node_modules/",
-    "start": "node server/server.js",
-    "posttest": "grunt startdb"
+    "posttest": "grunt startdb",
+    "start": "node server/server.js"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
