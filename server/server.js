@@ -137,7 +137,7 @@ app.delete('/avail', function(req,res){
   })
 })
 
-app.delete('/logout',function(req,res){
+app.get('/logout',function(req,res){
   return util.removeAuth(req.user)
   .then(function(){
     return req.logout();
