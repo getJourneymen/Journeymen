@@ -19,7 +19,7 @@ angular.module('JourneymenApp.Search',[])
     }
   }
 ])
-controller('ResultsCtlr', ['$scope', 'SearchSvc', function($scope, SearchSvc) {
+.controller('ResultsCtlr', ['$scope', 'SearchSvc', function($scope, SearchSvc) {
 
   $scope.results = {}
 
@@ -29,7 +29,7 @@ controller('ResultsCtlr', ['$scope', 'SearchSvc', function($scope, SearchSvc) {
       console.log('Updated ResultsCtlr data...')
   })
 }])
-factory('SearchSvc', ['$http', function($http) {
+.factory('SearchSvc', ['$http', function($http) {
 
   var factoryObj = {};
   var results = {};
