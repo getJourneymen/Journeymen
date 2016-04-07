@@ -17,7 +17,10 @@
     "request": "^2.34.0"
   },
   "scripts": {
-    "start": "./node_modules/.bin/nodemon server/index.js --ignore node_modules/"
+    "postinstall":"bower install",
+    "test": "NODE_ENV=development ./node_modules/.bin/nodemon server/server.js --ignore node_modules/",
+    "start": "node server/server.js",
+    "posttest": "grunt startdb"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
