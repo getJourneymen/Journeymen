@@ -21,9 +21,9 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "test": "NODE_ENV=development ./node_modules/.bin/nodemon server/server.js --ignore node_modules/",
-    "posttest": "grunt startdb",
-    "start": "node server/server.js"
+    "pretest": "grunt startdb; grunt seeddb",
+    "start": "node server/server.js",
+    "test": "NODE_ENV=development ./node_modules/.bin/nodemon server/server.js --ignore node_modules/"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
