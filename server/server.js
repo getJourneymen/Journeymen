@@ -36,7 +36,13 @@ app.get('/login', passport.authenticate('soundcloud'));
 /*****************************************
             Get Requests
   1. Serve index.html
-  2. Search Format : req.body --{query: {instrument: string, start: string, end:string}}
+  2. Search Format -- In Angular, build up a query string 
+     by setting the params property in the $http config object
+     Ex. $http({
+          method: 'GET',
+          url   : '/search',
+          params: {instrument: [1], start: 'timestamp', end: 'timestamp'})
+        })
   3. Logout
 ******************************************/
 
@@ -46,28 +52,33 @@ app.get('/',function(req,res){
 
 app.get('/search', function(req,res){
  var queryString = req.query;
- console.log('querystring:', queryString);
+ //console.log('querystring:', queryString);
   return util.searchUsers(queryString)
-    .then(function(rows) {
-      return res.send(rows);
-    });
+        .then(function(rows) {
+          return res.send(rows);
+        });
 
 })
 
 app.get('/logout',function(req,res){
-  util.removeAuth(req.user);
-  req.logout();
-  res.redirect('/');
+  return util.removeAuth(req.user)
+        .then(function(){
+          return req.logout();
+        })
+        .then(function(){
+          return res.redirect('/');
+        })
+  
 })
 
 app.get('/avail', ensureAuthenticated, function(req,res){
   return util.getAvail(req.user)
-    .then(function(row){
-      return res.send(row);
-    })
-    .catch(function(err){
-      console.error(err);
-    })
+        .then(function(row){
+          return res.send(row);
+        })
+        .catch(function(err){
+          console.error(err);
+        })
 })
 
 /*
@@ -77,13 +88,13 @@ app.get('/avail', ensureAuthenticated, function(req,res){
 app.get('/user', function(req,res){
   //console.log('req.user:', req.user);
   return util.getUser(req.user)
-   .then(function(row){
-    console.log('row:', row);
-     return res.send(row);
-  })
-   .catch(function(err){
-    console.error(err)
-  })
+        .then(function(row){
+          console.log('row:', row);
+          return res.send(row);
+        })
+        .catch(function(err){
+          console.error(err)
+        })
 })
 
 
@@ -100,12 +111,12 @@ app.get('/user', function(req,res){
 // })
 app.post('/avail', function(req, res) {
   return util.createAvail(req.body)
-    .then(function(){
-      return res.status(200).send('New availability was created!')
-    })
-    .catch(function(err){
-      return res.status(400).send({err: err});
-    })
+        .then(function(){
+          return res.status(200).send('New availability was created!')
+        })
+        .catch(function(err){
+          return res.status(400).send({err: err});
+        })
 })
 
 /**********************************
@@ -114,22 +125,22 @@ app.post('/avail', function(req, res) {
 
 app.put('/user',function(req,res){
   return util.updateUser(req.body)
-    .then(function(){
-      return res.status(201).send('All updated');
-    })
-    .catch(function(err){
-      return res.status(400).send('Something went wrong');
-    })
+        .then(function(){
+          return res.status(200).send('All updated');
+        })
+        .catch(function(err){
+          return res.status(400).send('Something went wrong');
+        })
 })
 
 app.put('/avail', function(req, res) {
   return util.updateAvail(req.body)
-    .then(function(){
-      return res.status(200).send('All updated');
-    })
-    .catch(function(){
-      return res.status(400).send('Something went wrond');
-    })
+        .then(function(){
+          return res.status(200).send('All updated');
+        })
+        .catch(function(){
+          return res.status(400).send('Something went wrond');
+        })
 })
 
 /*

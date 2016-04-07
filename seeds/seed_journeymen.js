@@ -13,7 +13,7 @@ exports.seed = function(knex, Promise) {
                                         email: 'email@email.com',
     	                             instrument: '[1]',
                                   description: 'about me'
-                           }),
+                              }),
     
     knex('journeymen').insert({   
 
@@ -24,7 +24,7 @@ exports.seed = function(knex, Promise) {
                                         email: 'email@gmail.com',
                                    instrument: '[1,2,3]', 
                                   description: 'about me'
-                            }),
+                              }),
     
     knex('journeymen').insert({         
                                 soundcloud_id: 12347,
@@ -34,6 +34,6 @@ exports.seed = function(knex, Promise) {
                                         email: 'email@hmail.com',
                                    instrument: '[1]', 
                                   description: 'about me'
-                            })
+                              })
   )
 };

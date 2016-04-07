@@ -16,21 +16,34 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser('kitkat'));
 
+/**
+** serialize/deserialize are the gears of passport sessions.
+** As long as the soundcloud_id returns a profile from the DB,
+** the session persists. If it doesn't, middleware auth check
+** isAuthenticated() catches it responds with 401.
+**/
+
+/*Sets req.session.passport.user to user.soundcloud_id
+  user.soundcloud_id is also the id passed to deserialize*/
+
 passport.serializeUser(function(user, done){
   done(null, user.soundcloud_id);
 });
 
-passport.deserializeUser(function(obj, done) {
+/*Retrieves the full profile from DB and 
+  sets req.user to full DB profile*/
+
+passport.deserializeUser(function(id, done) {
 
   console.log('deserial Obj:', obj);
 
-  return util.getUser({soundcloud_id:obj})
-  .then(function(user){
-    return done(null,user);
-  })
-  .catch(function(err){
-    console.error(err)
-  })
+  return util.getUser({soundcloud_id:id})
+        .then(function(user){
+          return done(null,user);
+        })
+        .catch(function(err){
+          console.error(err)
+        })
 });
 
 passport.use(new SoundCloudStrategy({
@@ -45,30 +58,30 @@ passport.use(new SoundCloudStrategy({
     //console.log('accessToken:', accessToken)
     //console.log(profile)
     
-    //check DB for user profile--if non-existant, create and store in DB lines 56-70
+    //checks DB for user profile--if non-existant, creates and stores in DB lines 56-70
     return util.getUser({soundcloud_id:profile.id})
-    .then(function(user){
-      if(user){
-      // console.log('user:', user);
-        return done(null,user);
-      }else{
+          .then(function(user){
+            
+            if(user){
+              return done(null,user);
+            }else{
       
-        var userProfile = {
-                          soundcloud_id: profile.id,
-                               username: profile._json.username,
-                             first_name: profile._json.first_name,
-                              last_name: profile._json.last_name,
-                                  email: '',
-                             instrument: '',
-                            description: '',
-                                img_url: profile._json.avatar_url
-                          } 
+              var userProfile = {
+                                soundcloud_id: profile.id,
+                                username     : profile._json.username,
+                                first_name   : profile._json.first_name,
+                                last_name    : profile._json.last_name,
+                                email        : '',
+                                instrument   : '',
+                                description  : '',
+                                img_url      : profile._json.avatar_url
+                                } 
       
-        util.createUser(userProfile)
-        .then(function(){
-          return done(null,userProfile);
-        })
-      }
-    })
+              util.createUser(userProfile)
+              .then(function(){
+               return done(null,userProfile);
+              })
+            }
+          })
   }));
 };

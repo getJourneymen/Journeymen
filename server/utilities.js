@@ -4,65 +4,79 @@ var db          = require('knex')(config[env]);
 
 var util = module.exports;
 
-// get Request Utilities
-util.getUser = function(obj) {
-return db.select().from("journeymen")
-    .where('soundcloud_id', '=', obj.soundcloud_id)
-    .then(function(rows) {
-    return rows[0];
-    });
+
+/*************************
+  GET Request Utilities
+*************************/
+
+util.getUser = function(reqObj) {
+  return db.select().from("journeymen")
+        .where('soundcloud_id', '=', reqObj.soundcloud_id)
+        .then(function(rows) {
+        return rows[0];
+        });
 }
 
-util.getAvail = function(obj){
+util.getAvail = function(reqObj){
   return db.select().from('availability')
-         .where('user_id', '=', obj.soundcloud_id)
-         .then(function(row){
-          return row;
-         })
+        .where('user_id', '=', reqObj.soundcloud_id)
+        .then(function(row){
+        return row;
+        })
 }
 
-util.searchUsers = function(obj) {
-  console.log('obj:', obj.start);
+util.searchUsers = function(reqObj) {
+  //console.log('reqObj:', reqObj.start);
   return db.from('availability')
-    .innerJoin('journeymen','soundcloud_id', 'availability.user_id')
-    .where('availability.instrument','=', obj.instrument)
-    .andWhere('availability.start', '<=', obj.start)
-    .andWhere('availability.end', '>=', obj.end)
-    .select();
+        .innerJoin('journeymen','soundcloud_id', 'availability.user_id')
+        .where('availability.instrument','=', reqObj.instrument)
+        .andWhere('availability.start', '<=', reqObj.start)
+        .andWhere('availability.end', '>=', reqObj.end)
+        .select();
 }
 
+/*************************
+  POST Request Utilities
+**************************/
 
-//Post Request Utilities
-util.createUser = function(obj) {
-  return db('journeymen').insert(obj);
+util.createUser = function(reqObj) {
+  return db('journeymen').insert(reqObj);
 }
 
-util.createSession = function(obj) {
-  return db('sessions').insert(obj);
+util.createSession = function(reqObj) {
+  return db('sessions').insert(reqObj);
 }
 
-util.createAvail = function(obj) {
-  return db('availability').insert(obj)
+util.createAvail = function(reqObj) {
+  return db('availability').insert(reqObj)
 }
 
-//Put Request Utilities
-util.updateUser = function(obj) {
+/**************************
+   PUT Request Utilities
+***************************/
+
+util.updateUser = function(reqObj) {
   return db('journeymen')
-         .where('soundcloud_id', '=', obj.soundcloud_id).update(obj);
+        .where('soundcloud_id', '=', reqObj.soundcloud_id)
+        .update(reqObj);
 }
 
-util.updateAvail = function(obj){
+util.updateAvail = function(reqObj){
   return db('availability')
-         .where('id', '=', obj.id).update(obj);
+        .where('id', '=', reqObj.id)
+        .update(reqObj);
 }
 
+/*************************
+   Auth Table Utilities
+**************************/
 
-//Auth table Utilities
-
-util.addAuth = function(obj){
-  db('auth').insert(obj);
+util.addAuth = function(reqObj){
+  return db('auth').insert(reqObj);
 }
 
-util.removeAuth = function(obj){
-  db('auth').where('user_id','=', obj.soundcloud_id).del();
+util.removeAuth = function(reqObj){
+  return db('auth')
+        .where('user_id','=', reqObj.soundcloud_id)
+        .del();
 }
