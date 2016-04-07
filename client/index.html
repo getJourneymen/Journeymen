@@ -11,7 +11,31 @@
 </head>
 
 <body>
-    <div ui-view></div>
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+        Journeymen
+      </a>
+    </div>
+  </div>
+</nav>
+  <section class="main container">
+    <div class="row">
+      <div class="co-xs-12 col-sm-8 col-sm-offset-2">
+        <div ui-view></div>
+      </div>
+    </div>
+  </section>
+  <footer class="container">
+      <div class="row">
+          <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+              <div class="well well-sm">
+                <p>This is where the footer will live</p>
+              </div>
+          </div>
+      </div>
+  </footer>
     <script src="app/app.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
     <script src="bower_components/checklist-model/checklist-model.js"></script>
@@ -23,12 +47,4 @@
     <script src="common/instrument.js"></script>
     <script src="search/search.js"></script>
 </body>
-<footer class="container">
-    <div class="row">
-        <div>
-            This is where the footer will live
-        </div>
-    </div>
-</footer>
-
 </html>
