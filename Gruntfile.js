@@ -33,8 +33,8 @@ module.exports = function(grunt) {
       init_db: {
         cmd: 'initdb journeymen_dev/'
       },
-      run_db: {
-        cmd: 'postgres -D journeymen_dev/'
+      run_db_server: {
+        cmd: 'pg_ctl start -D journeymen_dev/'
       },
       drop_db: {
         cmd: 'dropdb journeymen_dev'
