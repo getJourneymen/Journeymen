@@ -43,7 +43,9 @@ app.get('/login', passport.authenticate('soundcloud'));
           url   : '/search',
           params: {instrument: [1], start: 'timestamp', end: 'timestamp'})
         })
-  3. Logout
+  3. Getting /avail and /user doesn't need querystring because req.body
+     will have been set by passport deserialize. We match with req.body.soundcloud_id 
+  4. Logout
 ******************************************/
 
 app.get('/',function(req,res){
