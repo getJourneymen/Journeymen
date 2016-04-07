@@ -36,8 +36,16 @@ app.get('/login', passport.authenticate('soundcloud'));
 /*****************************************
             Get Requests
   1. Serve index.html
-  2. Search Format : req.body --{query: {instrument: string, start: string, end:string}}
-  3. Logout
+  2. Search Format -- In Angular, build up a query string 
+     by setting the params property in the $http config object
+     Ex. $http({
+          method: 'GET',
+          url   : '/search',
+          params: {instrument: [1], start: 'timestamp', end: 'timestamp'})
+        })
+  3. Getting /avail and /user doesn't need querystring because req.body
+     will have been set by passport deserialize. We match with req.body.soundcloud_id 
+  4. Logout
 ******************************************/
 
 app.get('/',function(req,res){
@@ -45,35 +53,32 @@ app.get('/',function(req,res){
 })
 
 app.get('/search', function(req,res){
- var queryString = req.query;
- console.log('querystring:', queryString);
-  util.searchUsers(queryString)
-    .then(function(rows) {
-      res.send(rows);
-    });
-
+  var queryString = req.query;
+ //console.log('querystring:', queryString);
+  return util.searchUsers(queryString)
+  .then(function(rows) {
+    return res.send(rows);
+  });
 })
 
-app.get('/logout',function(req,res){
-  req.logout();
-  res.redirect('/');
+app.get('/avail', function(req,res){
+  return util.getAvail(req.user)
+  .then(function(row){
+    return res.send(row);
+  })
+  .catch(function(err){
+    console.error(err);
+  })
 })
-
-app.get('/avail', ensureAuthenticated, function(req,res){
-  //db function to get avail of user;
-})
-
-/*
-*format for 'profile' req body--{profile: {name: string, instrument: array of numbers,avail:}}
-*/
 
 app.get('/user', function(req,res){
   //console.log('req.user:', req.user);
-  return util.getUser({id: req.user.soundcloud_id})
-   .then(function(row){
-     res.send(row);
+  return util.getUser(req.user)
+  .then(function(row){
+    console.log('row:', row);
+    return res.send(row);
   })
-   .catch(function(err){
+  .catch(function(err){
     console.error(err)
   })
 })
@@ -87,42 +92,62 @@ app.get('/user', function(req,res){
    start: DateTime, end: DateTime, instrument: string }}
 **********************************/
 
-app.post('/signup', function(req, res) {
-  util.createUser(req.body)
-})
 app.post('/avail', function(req, res) {
-  util.createAvail(req.body)
+  return util.createAvail(req.body)
+  .then(function(){
+    return res.status(200).send('New availability was created!')
+  })
+  .catch(function(err){
+    return res.status(400).send({err: err});
+  })
 })
 
-/**********************************
-        Update Information
-***********************************/
+/*********************************************
+    Update/Remove Information--PUT & DELETE
+**********************************************/
 
-app.put('/user',function(req,res){
-  util.updateUser(req.body)
-    .then(function(something) {
-      console.log('whatever update query returns:', something);
-    })
+app.put('/user', ensureAuthenticated, function(req,res){
+  return util.updateUser(req.body)
+  .then(function(){
+    return res.status(200).send(req.body);
+  })
+  .catch(function(err){
+    return res.status(400).send('Something went wrong');
+  })
 })
 
-app.put('/avail', function(req, res) {
-  util.updateAvail(req.body)
+app.put('/avail', ensureAuthenticated, function(req, res){
+  return util.updateAvail(req.body)
+  .then(function(){
+    return res.status(200).send('All updated');
+  })
+  .catch(function(err){
+    return res.status(400).send(err);
+  })
 })
 
-/*
-*
-*logout route
-**/
+app.delete('/avail', function(req,res){
+  return util.removeAvail(req.body)
+  .then(function(){
+    return res.status(200).send('All updated')
+  })
+  .catch(function(err){
+    return res.status(400).send(err)
+  })
+})
 
 app.delete('/logout',function(req,res){
-  util.removeUser(req.body.id);
-  res.redirect('/');
+  return util.removeAuth(req.user)
+  .then(function(){
+    return req.logout();
+  })
+  .then(function(){
+    return res.redirect('/');
+  })
 })
 
-
-
 /***********************************
-          Auth routes
+          Auth Callback
 ***********************************/
 
 app.get('/auth/soundcloud/callback',
@@ -134,7 +159,7 @@ app.get('/auth/soundcloud/callback',
   });
 
 /**********************************
-        middleware auth check
+        Middleware Auth Check
 ***********************************/
 
 function ensureAuthenticated(req, res, next) {
