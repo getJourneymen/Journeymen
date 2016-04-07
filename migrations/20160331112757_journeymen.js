@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
     //Create Users Table
     knex.schema.createTable('journeymen', function(table) {
       table.increments('id').primary();
-      table.integer('soundcloud_id').unique();
+      table.integer('soundcloud_id').unique;
       table.string('username');
       table.string('first_name');
       table.string('last_name');
@@ -20,21 +20,21 @@ exports.up = function(knex, Promise) {
     //Create Authentication Table
     knex.schema.createTable('auth', function(table) {
       table.increments('id').primary();
-      table.integer('user_id').references('soundcloud_id').inTable('journeymen');
+      table.integer('user_id').references('id').inTable('journeymen');
       table.string('auth_token');
     }),
 
     //Create Sessions Table
     knex.schema.createTable('sessions', function(table) {
       table.increments('id').primary();
-      table.integer('user_id').references('soundcloud_id').inTable('journeymen');
+      table.integer('user_id').references('id').inTable('journeymen');
       table.string('session_token');
     }),
 
     //Create Availability Table
     knex.schema.createTable('availability', function(table) {
       table.increments('id').primary();
-      table.integer('user_id').references('soundcloud_id').inTable('journeymen');
+      table.integer('user_id').references('id').inTable('journeymen');
       table.timestamp('start');
       table.timestamp('end');
       table.string('instrument');

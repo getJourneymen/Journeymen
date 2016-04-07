@@ -38,12 +38,12 @@ passport.deserializeUser(function(id, done) {
   console.log('deserial Obj:', id);
 
   return util.getUser({soundcloud_id:id})
-  .then(function(user){
-    return done(null,user);
-  })
-  .catch(function(err){
-    console.error(err)
-  })
+        .then(function(user){
+          return done(null,user);
+        })
+        .catch(function(err){
+          console.error(err)
+        })
 });
 
 passport.use(new SoundCloudStrategy({
@@ -61,28 +61,28 @@ passport.use(new SoundCloudStrategy({
     //checks DB for user profile--if non-existant, 
     //creates and stores in DB lines 56-70
     return util.getUser({soundcloud_id:profile.id})
-    .then(function(user){
+          .then(function(user){
+            
+            if(user){
+              return done(null,user);
+            }else{
       
-      if(user){
-        return done(null,user);
-      }else{
-
-        var userProfile = {
-          soundcloud_id: profile.id,
-          username     : profile._json.username,
-          first_name   : profile._json.first_name,
-          last_name    : profile._json.last_name,
-          email        : '',
-          instrument   : '',
-          description  : '',
-          img_url      : profile._json.avatar_url
-        } 
-
-        util.createUser(userProfile)
-        .then(function(){
-         return done(null,userProfile);
-        })
-      }
-    })
+              var userProfile = {
+                soundcloud_id: profile.id,
+                username     : profile._json.username,
+                first_name   : profile._json.first_name,
+                last_name    : profile._json.last_name,
+                email        : '',
+                instrument   : '',
+                description  : '',
+                img_url      : profile._json.avatar_url
+              } 
+      
+              util.createUser(userProfile)
+              .then(function(){
+               return done(null,userProfile);
+              })
+            }
+          })
   }));
 };

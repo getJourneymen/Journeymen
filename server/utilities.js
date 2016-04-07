@@ -19,7 +19,7 @@ util.getUser = function(reqObj) {
 
 util.getAvail = function(reqObj){
   return db.select().from('availability')
-        .where('user_id', '=', reqObj.soundcloud_id)
+        .where('user_id', '=', reqObj.id)
         .then(function(row){
         return row;
         })
@@ -28,7 +28,7 @@ util.getAvail = function(reqObj){
 util.searchUsers = function(reqObj) {
   //console.log('reqObj:', reqObj.start);
   return db.from('availability')
-        .innerJoin('journeymen','soundcloud_id', 'availability.user_id')
+        .innerJoin('journeymen','id', 'user_id')
         .where('availability.instrument','=', reqObj.instrument)
         .andWhere('availability.start', '<=', reqObj.start)
         .andWhere('availability.end', '>=', reqObj.end)
@@ -57,7 +57,7 @@ util.createAvail = function(reqObj){
 
 util.updateUser = function(reqObj){
   return db('journeymen')
-        .where('soundcloud_id', '=', reqObj.soundcloud_id)
+        .where('id', '=', reqObj.id)
         .update(reqObj);
 }
 
@@ -88,6 +88,6 @@ util.addAuth = function(reqObj){
 
 util.removeAuth = function(reqObj){
   return db('auth')
-        .where('user_id','=', reqObj.soundcloud_id)
+        .where('user_id','=', reqObj.id)
         .del();
 }
