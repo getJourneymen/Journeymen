@@ -1,4 +1,5 @@
-app.factory('AuthSvc', [function() {
+angular.module('JourneymenApp.Auth', [])
+.factory('AuthSvc', [function() {
 
   var authToken = null;
 

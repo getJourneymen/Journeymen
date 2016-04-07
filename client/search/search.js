@@ -1,4 +1,5 @@
-app.controller('SearchCtlr', ['$scope', '$state', 'SearchSvc', function($scope, $state, SearchSvc) {
+angular.module('JourneymenApp.Search',[])
+.controller('SearchCtlr', ['$scope', '$state', 'SearchSvc', function($scope, $state, SearchSvc) {
 
   //Client should require all fields
   $scope.start = '';
@@ -15,9 +16,10 @@ app.controller('SearchCtlr', ['$scope', '$state', 'SearchSvc', function($scope, 
       .catch(function(err){
         console.log('An error occured performing the search', err)
       });
-}]);
-
-app.controller('ResultsCtlr', ['$scope', 'SearchSvc', function($scope, SearchSvc) {
+    }
+  }
+])
+controller('ResultsCtlr', ['$scope', 'SearchSvc', function($scope, SearchSvc) {
 
   $scope.results = {}
 
@@ -26,9 +28,8 @@ app.controller('ResultsCtlr', ['$scope', 'SearchSvc', function($scope, SearchSvc
     $scope.results = data;
       console.log('Updated ResultsCtlr data...')
   })
-}]);
-
-app.factory('SearchSvc', ['$http', function($http) {
+}])
+factory('SearchSvc', ['$http', function($http) {
 
   var factoryObj = {};
   var results = {};

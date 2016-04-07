@@ -1,7 +1,9 @@
 angular.module('JourneymenApp', [
     'ui.router',
     'ui.bootstrap',
-    'checklist-model'
+    'checklist-model',
+    'JourneymenApp.Search',
+    'JourneymenApp.Auth'
 
     //modules placeholder
     // 'JourneymenApp.auth',
