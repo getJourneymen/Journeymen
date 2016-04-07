@@ -81,10 +81,6 @@ app.get('/avail', ensureAuthenticated, function(req,res){
         })
 })
 
-/*
-*format for 'profile' req body--{profile: {name: string, instrument: array of numbers,avail:}}
-*/
-
 app.get('/user', function(req,res){
   //console.log('req.user:', req.user);
   return util.getUser(req.user)
