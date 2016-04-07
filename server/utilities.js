@@ -39,15 +39,15 @@ util.searchUsers = function(reqObj) {
   POST Request Utilities
 **************************/
 
-util.createUser = function(reqObj) {
+util.createUser = function(reqObj){
   return db('journeymen').insert(reqObj);
 }
 
-util.createSession = function(reqObj) {
+util.createSession = function(reqObj){
   return db('sessions').insert(reqObj);
 }
 
-util.createAvail = function(reqObj) {
+util.createAvail = function(reqObj){
   return db('availability').insert(reqObj)
 }
 
@@ -55,7 +55,7 @@ util.createAvail = function(reqObj) {
    PUT Request Utilities
 ***************************/
 
-util.updateUser = function(reqObj) {
+util.updateUser = function(reqObj){
   return db('journeymen')
         .where('soundcloud_id', '=', reqObj.soundcloud_id)
         .update(reqObj);
@@ -65,6 +65,17 @@ util.updateAvail = function(reqObj){
   return db('availability')
         .where('id', '=', reqObj.id)
         .update(reqObj);
+}
+
+/*************************
+  DELETE Request Utilities
+**************************/
+
+util.removeAvail = function(reqObj){
+  return db('availability')
+        .where('id', '=', reqObj.id)
+        .del();
+
 }
 
 /*************************

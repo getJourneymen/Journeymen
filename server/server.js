@@ -59,17 +59,7 @@ app.get('/search', function(req,res){
   });
 })
 
-app.get('/logout',function(req,res){
-  return util.removeAuth(req.user)
-  .then(function(){
-    return req.logout();
-  })
-  .then(function(){
-    return res.redirect('/');
-  })
-})
-
-app.get('/avail', ensureAuthenticated, function(req,res){
+app.get('/avail', function(req,res){
   return util.getAvail(req.user)
   .then(function(row){
     return res.send(row);
@@ -100,9 +90,6 @@ app.get('/user', function(req,res){
    start: DateTime, end: DateTime, instrument: string }}
 **********************************/
 
-// app.post('/signup', function(req, res) {
-//   util.createUser(req.body)
-// })
 app.post('/avail', function(req, res) {
   return util.createAvail(req.body)
   .then(function(){
@@ -113,11 +100,11 @@ app.post('/avail', function(req, res) {
   })
 })
 
-/**********************************
-        Update Information
-***********************************/
+/*********************************************
+    Update/Remove Information--PUT & DELETE
+**********************************************/
 
-app.put('/user',function(req,res){
+app.put('/user', ensureAuthenticated, function(req,res){
   return util.updateUser(req.body)
   .then(function(){
     return res.status(200).send(req.body);
@@ -127,30 +114,38 @@ app.put('/user',function(req,res){
   })
 })
 
-app.put('/avail', function(req, res) {
+app.put('/avail', ensureAuthenticated, function(req, res){
   return util.updateAvail(req.body)
   .then(function(){
     return res.status(200).send('All updated');
   })
-  .catch(function(){
-    return res.status(400).send('Something went wrond');
+  .catch(function(err){
+    return res.status(400).send(err);
   })
 })
 
-/*
-*
-*logout route
-**/
+app.delete('/avail', function(req,res){
+  return util.removeAvail(req.body)
+  .then(function(){
+    return res.status(200).send('All updated')
+  })
+  .catch(function(err){
+    return res.status(400).send(err)
+  })
+})
 
-// app.delete('/logout',function(req,res){
-//   util.removeUser(req.body.id);
-//   res.redirect('/');
-// })
-
-
+app.delete('/logout',function(req,res){
+  return util.removeAuth(req.user)
+  .then(function(){
+    return req.logout();
+  })
+  .then(function(){
+    return res.redirect('/');
+  })
+})
 
 /***********************************
-          Auth routes
+          Auth Callback
 ***********************************/
 
 app.get('/auth/soundcloud/callback',
@@ -162,7 +157,7 @@ app.get('/auth/soundcloud/callback',
   });
 
 /**********************************
-        middleware auth check
+        Middleware Auth Check
 ***********************************/
 
 function ensureAuthenticated(req, res, next) {
