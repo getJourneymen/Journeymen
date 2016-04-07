@@ -51,46 +51,44 @@ app.get('/',function(req,res){
 })
 
 app.get('/search', function(req,res){
- var queryString = req.query;
+  var queryString = req.query;
  //console.log('querystring:', queryString);
   return util.searchUsers(queryString)
-        .then(function(rows) {
-          return res.send(rows);
-        });
-
+  .then(function(rows) {
+    return res.send(rows);
+  });
 })
 
 app.get('/logout',function(req,res){
   return util.removeAuth(req.user)
-        .then(function(){
-          return req.logout();
-        })
-        .then(function(){
-          return res.redirect('/');
-        })
-  
+  .then(function(){
+    return req.logout();
+  })
+  .then(function(){
+    return res.redirect('/');
+  })
 })
 
 app.get('/avail', ensureAuthenticated, function(req,res){
   return util.getAvail(req.user)
-        .then(function(row){
-          return res.send(row);
-        })
-        .catch(function(err){
-          console.error(err);
-        })
+  .then(function(row){
+    return res.send(row);
+  })
+  .catch(function(err){
+    console.error(err);
+  })
 })
 
 app.get('/user', function(req,res){
   //console.log('req.user:', req.user);
   return util.getUser(req.user)
-        .then(function(row){
-          console.log('row:', row);
-          return res.send(row);
-        })
-        .catch(function(err){
-          console.error(err)
-        })
+  .then(function(row){
+    console.log('row:', row);
+    return res.send(row);
+  })
+  .catch(function(err){
+    console.error(err)
+  })
 })
 
 
@@ -107,12 +105,12 @@ app.get('/user', function(req,res){
 // })
 app.post('/avail', function(req, res) {
   return util.createAvail(req.body)
-        .then(function(){
-          return res.status(200).send('New availability was created!')
-        })
-        .catch(function(err){
-          return res.status(400).send({err: err});
-        })
+  .then(function(){
+    return res.status(200).send('New availability was created!')
+  })
+  .catch(function(err){
+    return res.status(400).send({err: err});
+  })
 })
 
 /**********************************
@@ -121,22 +119,22 @@ app.post('/avail', function(req, res) {
 
 app.put('/user',function(req,res){
   return util.updateUser(req.body)
-        .then(function(){
-          return res.status(200).send('All updated');
-        })
-        .catch(function(err){
-          return res.status(400).send('Something went wrong');
-        })
+  .then(function(){
+    return res.status(200).send(req.body);
+  })
+  .catch(function(err){
+    return res.status(400).send('Something went wrong');
+  })
 })
 
 app.put('/avail', function(req, res) {
   return util.updateAvail(req.body)
-        .then(function(){
-          return res.status(200).send('All updated');
-        })
-        .catch(function(){
-          return res.status(400).send('Something went wrond');
-        })
+  .then(function(){
+    return res.status(200).send('All updated');
+  })
+  .catch(function(){
+    return res.status(400).send('Something went wrond');
+  })
 })
 
 /*
