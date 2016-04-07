@@ -11,6 +11,7 @@ var cookieParser = require('cookie-parser');
 
 var app = express();
 
+var httpPort = process.env.PORT || 8080;
 
 app.use(express.static(path.join(__dirname+'/../client')));
 app.use(function(req, res, next) {
@@ -167,5 +168,5 @@ function ensureAuthenticated(req, res, next) {
   res.status(401).send({err: 'Authentication failed.'})
 }
 
-app.listen(8080);
-console.log('server is up at 8080')
+app.listen(httpPort);
+console.log('server is up at ', httpPort)
