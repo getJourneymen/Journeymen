@@ -72,7 +72,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-fixmyjs');
 
-  grunt.registerTask('startdb',  ['jshint', 'exec:init_db', 'exec:run_db']);
-  grunt.registerTask('seeddb',   ['jshint', 'exec:config_db','exec:init_schemas','exec:seed_db']);
+  grunt.registerTask('startdb',  ['exec:init_db', 'exec:run_db_server']);
+  grunt.registerTask('seeddb',   ['exec:config_db','exec:init_schemas','exec:seed_db']);
   grunt.registerTask('dropdb', ['exec:drop_db']);
+  grunt.registerTask('build', ['jshint'])
 };
