@@ -15,6 +15,7 @@ app.controller('SearchCtlr', ['$scope', '$state', 'SearchSvc', function($scope, 
       .catch(function(err){
         console.log('An error occured performing the search', err)
       });
+    }
 }]);
 
 app.controller('ResultsCtlr', ['$scope', 'SearchSvc', function($scope, SearchSvc) {

@@ -2,8 +2,8 @@ var express = require('express');
 var passport = require('passport');
 var bodyParser = require('body-parser');
 var path = require('path');
-var logout = require('express-passport-logout')
-// var auth = require('./auth');
+var logout = require('express-passport-logout');
+//var auth = require('./auth.js');
 var db = require('./db.js');
 var util = require('./utilities.js');
 var cookieParser = require('cookie-parser');
@@ -44,7 +44,7 @@ app.get('/login', passport.authenticate('soundcloud'));
           params: {instrument: [1], start: 'timestamp', end: 'timestamp'})
         })
   3. Getting /avail and /user doesn't need querystring because req.body
-     will have been set by passport deserialize. We match with req.body.soundcloud_id 
+     will have been set by passport deserialize. We match with req.user.id 
   4. Logout
 ******************************************/
 
@@ -75,7 +75,7 @@ app.get('/user', function(req,res){
   //console.log('req.user:', req.user);
   return util.getUser(req.user)
   .then(function(row){
-    console.log('row:', row);
+    //console.log('row:', row);
     return res.send(row);
   })
   .catch(function(err){
@@ -95,7 +95,7 @@ app.get('/user', function(req,res){
 app.post('/avail', function(req, res) {
   return util.createAvail(req.body)
   .then(function(){
-    return res.status(200).send('New availability was created!')
+    return res.status(200).send('New availability was created!');
   })
   .catch(function(err){
     return res.status(400).send({err: err});
@@ -106,7 +106,7 @@ app.post('/avail', function(req, res) {
     Update/Remove Information--PUT & DELETE
 **********************************************/
 
-app.put('/user', ensureAuthenticated, function(req,res){
+app.put('/user', function(req,res){
   return util.updateUser(req.body)
   .then(function(){
     return res.status(200).send(req.body);
@@ -116,7 +116,7 @@ app.put('/user', ensureAuthenticated, function(req,res){
   })
 })
 
-app.put('/avail', ensureAuthenticated, function(req, res){
+app.put('/avail', function(req, res){
   return util.updateAvail(req.body)
   .then(function(){
     return res.status(200).send('All updated');
