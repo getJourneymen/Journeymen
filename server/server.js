@@ -73,17 +73,28 @@ app.get('/avail', function(req,res){
 })
 
 app.get('/user', function(req,res){
-  //console.log('req.user:', req.user);
-  return util.getUser(req.user)
-  .then(function(row){
-    console.log('row:', row);
-    return res.send(row);
-  })
-  .catch(function(err){
-    console.error(err)
-  })
+  // console.log('req.user:', req.user);
+    return util.getUserByUsername(req.query.username)
+      .then(function(row){
+        console.log('user data retreived row:', row, req.query);
+        return res.send(row);
+      })
+    .catch(function(err){
+      console.error(err)
+    })
 })
 
+app.get('/user/me', ensureAuthenticated, function(req,res){
+  console.log('req.user:', req.user);
+    return util.getUser(req.user)
+      .then(function(row){
+        console.log('user data retreived row:', row);
+        return res.send(row);
+      })
+    .catch(function(err){
+      console.error(err)
+    })
+})
 
 /**********************************
         Post Requests
