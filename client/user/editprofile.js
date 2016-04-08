@@ -1,4 +1,4 @@
-angular.module('JourneymenApp')
+angular.module('JourneymenApp.ProfileEdit',[])
     .controller('EditprofileCtlr', function($scope,$state, EditprofileSvc) {
         $scope.pic;
         $scope.first = '';
@@ -13,7 +13,8 @@ angular.module('JourneymenApp')
         	//create user and set avail?
         }
 
-    })//send authtoken and call update user endpoint put endpoin '/user' and put endpoint: '/avail' with updated object
+    })
+    //send authtoken and call update user endpoint put endpoin '/user' and put endpoint: '/avail' with updated object
     .factory('EditprofileSvc', function($http) {
 
         var soundCloudData = {};

@@ -1,28 +1,34 @@
-angular.module('JourneymenApp')
-    .controller('ProfileCtlr', function($scope, $state, ProfileSvc, AuthSvc, InstrSvc) {
+angular.module('JourneymenApp.Profile',['JourneymenApp.Auth'])
+    .controller('ProfileCtlr', ['$scope','$state','ProfileSvc','AuthSvc', function($scope, $state, ProfileSvc, AuthSvc) {
 
-        ProfileSvc.retrieveProfile(AuthSvc.retrieveID())
+      $scope.user = {};
+
+      console.log('state params', $state)
+        ProfileSvc.retrieveProfile($state.params.uname)
             .then(function(profileData) {
-                $scope.pic = profileData.img_url;
-                $scope.first = profileData.first_name;
-                $scope.last = profileData.last_name;
-                $scope.email = profileData.email;
-                $scope.description = profileData.description;
-                $scope.instruments = InstrSvc.findInstruments(profileData.instrument);
+                $scope.user.pic = profileData.img_url;
+                $scope.user.first = profileData.first_name;
+                $scope.user.last = profileData.last_name;
+                $scope.user.email = profileData.email;
+                $scope.user.description = profileData.description;
+                // $scope.user.instruments = InstrSvc.findInstruments(profileData.instrument);
+                console.log('user data is :', $scope.user)
             })
             .catch(function() {
                 console.log('Error displaying data')
             })
-    })
-    .factory('ProfileSvc', function($http) {
+    }])
+    .factory('ProfileSvc', function($state, $http) {
 
-        var getUserUri = '/user';
+        var getUserUri = $state.params.uname ? '/user' : '/user/me';
 
-        function retrieveProfile(soundCloudId) {
-            $http.get(getUserUri, soundCloudId)
+        function retrieveProfile(username) {
+            var queryParams = {};
+            if(username) queryParams = {username: username};
+            return $http.get(getUserUri, queryParams)
                 .then(function(profileData) {
-                    console.log('Successfully retrieved profile');
-                    return JSON.parse(profileData)
+                    console.log('Successfully retrieved profile', profileData);
+                    return profileData.data
                 })
                 .catch(function(err) {
                     console.log('Error retrieving profile: ', err)

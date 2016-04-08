@@ -31,7 +31,13 @@ angular.module('JourneymenApp', [
             authenticate: true
         })
         .state('profile', {
-            url: '/profile',
+            url: '/profile/:uname',
+            params: {
+              uname: {
+                value: null,
+                squash: true
+              }
+            },
             templateUrl: '../user/profile.html',
             controller: 'ProfileCtlr',
             authenticate: true
