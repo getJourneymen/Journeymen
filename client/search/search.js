@@ -21,6 +21,9 @@ angular.module('JourneymenApp.Search',[])
 ])
 .controller('ResultsCtlr', ['$scope', 'SearchSvc', function($scope, SearchSvc) {
 
+
+app.controller('ResultsCtlr', ['$scope', 'SearchSvc', function($scope, SearchSvc) {
+
   $scope.results = {}
 
   SearchSvc.data().then(function(data) {

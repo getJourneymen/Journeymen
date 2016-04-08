@@ -2,9 +2,10 @@
   "name": "getJourneymen",
   "version": "0.0.1",
   "description": "The Journeymen app will let freelance musicians connect with groups or other musicians looking to book them for gigs.",
-  "repository": { "type": "git",
-                  "url": "https://github.com/getJourneymen/Journeymen"
-                },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/getJourneymen/Journeymen"
+  },
   "main": "server/server.js",
   "author": "getJourneymen",
   "dependencies": {
@@ -16,6 +17,7 @@
     "passport": "^0.3.2",
     "passport-soundcloud": "^0.1.2",
     "path": "^0.12.7",
+    "pg": "^4.5.2",
     "request": "^2.34.0"
   },
   "scripts": {
