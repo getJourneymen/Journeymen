@@ -30,7 +30,7 @@ passport.serializeUser(function(user, done){
   done(null, user.soundcloud_id);
 });
 
-/*Retrieves the full profile from DB and 
+/*Retrieves the full profile from DB and
   sets req.user to full DB profile*/
 
 passport.deserializeUser(function(id, done) {
@@ -54,19 +54,19 @@ passport.use(new SoundCloudStrategy({
   function(accessToken, params, refreshToken, profile, done) {
     //stores auth values in auth table
     util.addAuth({user_id: profile.id, auth_token: accessToken})
-    
+
     //console.log('accessToken:', accessToken)
     //console.log(profile)
-    
-    //checks DB for user profile--if non-existant, 
+
+    //checks DB for user profile--if non-existant,
     //creates and stores in DB lines 56-70
     return util.getUser({soundcloud_id:profile.id})
           .then(function(user){
-            
+
             if(user){
               return done(null,user);
             }else{
-      
+
               var userProfile = {
                 soundcloud_id: profile.id,
                 username     : profile._json.username,
@@ -76,10 +76,11 @@ passport.use(new SoundCloudStrategy({
                 instrument   : '',
                 description  : '',
                 img_url      : profile._json.avatar_url
-              } 
-      
+              }
+
               util.createUser(userProfile)
-              .then(function(){
+              .then(function(data){
+								userProfile.id = data[0]
                return done(null,userProfile);
               })
             }
