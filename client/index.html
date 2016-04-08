@@ -11,11 +11,52 @@
 </head>
 
 <body>
-    <div ui-view></div>
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-main" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          Journeymen
+        </a>
+      </div>
+      <div class="collapse navbar-collapse" id="nav-main">
+      <ul class="nav navbar-nav">
+        <li class="active">
+          <a ui-sref="search">Search <span class="sr-only">(current)</span></a></li>
+        <li>
+          <a ui-sref="signin">Sign In</a></li>
+        <li>
+          <a href="/logout">Logout <span class="sr-only">(current)</span></a></li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+  <section class="main container">
+    <div class="row">
+      <div class="co-xs-12 col-sm-8 col-sm-offset-2">
+        <div ui-view></div>
+      </div>
+    </div>
+  </section>
+  <footer class="container">
+      <div class="row">
+          <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+              <div class="well well-sm">
+                <p>This is where the footer will live</p>
+              </div>
+          </div>
+      </div>
+  </footer>
     <script src="app/app.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
     <script src="bower_components/checklist-model/checklist-model.js"></script>
-    <script src="auth/auth.js"></script>
+    <script src="auth/auth_mod.js"></script>
     <script src="user/setavail.js"></script>
     <script src="user/editprofile.js"></script>
     <script src="user/profile.js"></script>
@@ -23,12 +64,4 @@
     <script src="common/instrument.js"></script>
     <script src="search/search.js"></script>
 </body>
-<footer class="container">
-    <div class="row">
-        <div>
-            This is where the footer will live
-        </div>
-    </div>
-</footer>
-
 </html>

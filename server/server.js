@@ -11,6 +11,7 @@ var cookieParser = require('cookie-parser');
 
 var app = express();
 
+var httpPort = process.env.PORT || 8080;
 
 app.use(express.static(path.join(__dirname+'/../client')));
 app.use(function(req, res, next) {
@@ -36,7 +37,7 @@ app.get('/login', passport.authenticate('soundcloud'));
 /*****************************************
             Get Requests
   1. Serve index.html
-  2. Search Format -- In Angular, build up a query string 
+  2. Search Format -- In Angular, build up a query string
      by setting the params property in the $http config object
      Ex. $http({
           method: 'GET',
@@ -44,7 +45,7 @@ app.get('/login', passport.authenticate('soundcloud'));
           params: {instrument: [1], start: 'timestamp', end: 'timestamp'})
         })
   3. Getting /avail and /user doesn't need querystring because req.body
-     will have been set by passport deserialize. We match with req.body.soundcloud_id 
+     will have been set by passport deserialize. We match with req.body.soundcloud_id
   4. Logout
 ******************************************/
 
@@ -136,13 +137,16 @@ app.delete('/avail', function(req,res){
   })
 })
 
-app.delete('/logout',function(req,res){
+app.get('/logout', ensureAuthenticated, function(req,res){
   return util.removeAuth(req.user)
   .then(function(){
     return req.logout();
   })
   .then(function(){
     return res.redirect('/');
+  })
+  .catch(function(err){
+    console.log("An error occurred on logout: ", err);
   })
 })
 
@@ -151,12 +155,12 @@ app.delete('/logout',function(req,res){
 ***********************************/
 
 app.get('/auth/soundcloud/callback',
-  passport.authenticate('soundcloud',{ successRedirect: '/user', failureRedirect: '/login'}),
+  passport.authenticate('soundcloud',{ successRedirect: '/', failureRedirect: '/'}),
   function(req, res){
     //console.log('req.user:', req.user);
     // console.log('req.session.passport.user:', req.session.passport.user);
   //res.redirect('/user');
-  });
+  })
 
 /**********************************
         Middleware Auth Check
@@ -167,5 +171,5 @@ function ensureAuthenticated(req, res, next) {
   res.status(401).send({err: 'Authentication failed.'})
 }
 
-app.listen(8080);
-console.log('server is up at 8080')
+app.listen(httpPort);
+console.log('server is up at ', httpPort)

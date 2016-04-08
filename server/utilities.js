@@ -40,7 +40,7 @@ util.searchUsers = function(reqObj) {
 **************************/
 
 util.createUser = function(reqObj){
-  return db('journeymen').insert(reqObj);
+  return db().insert(reqObj).returning('id').into('journeymen');
 }
 
 util.createSession = function(reqObj){
