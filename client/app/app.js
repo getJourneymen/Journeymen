@@ -47,7 +47,7 @@ angular.module('JourneymenApp', [
             controller: 'ProfileCtlr',
             authenticate: true
         })
-        .state('profile.edit', {
+        .state('profile-edit', {
             url: '/profile-edit',//add userid to url
             templateUrl: '../user/editprofile.html',
             controller: 'EditprofileCtlr',

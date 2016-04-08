@@ -29,7 +29,7 @@ angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.
     .factory('EditprofileSvc', function($http) {
 
         var soundCloudData = {};
-        var createUserUri = '/signup';
+        var createUserUri = '/user';
 
         function extractName() {
             return soundCloudData.name; //verify after return data confirmed
@@ -47,7 +47,8 @@ angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.
         }
 
         function storeUser(userData) {
-            $http.post(createUserUri, userData)
+          console.log('Going to update user', userData)
+            $http.put(createUserUri, userData)
                 .then(function(res) {
                     console.log('Successfully added user: ', res)
                 })
