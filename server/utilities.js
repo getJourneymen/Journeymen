@@ -11,11 +11,11 @@ var util = module.exports;
 
 util.getUser = function(reqObj) {
   return db.select().from("journeymen")
-        .where('soundcloud_id', '=', reqObj.soundcloud_id)
-        .then(function(rows) {
-        return rows[0];
-        });
-}
+         .where('soundcloud_id', '=', reqObj.soundcloud_id)
+         .then(function(rows) {
+         return rows[0];
+     });
+    }
 
 util.getUserByUsername = function(username) {
   return db.select().from("journeymen")
@@ -33,6 +33,7 @@ util.getUserBySoundcloud = function(soundcloud_id) {
         });
 }
 
+
 util.getAvail = function(reqObj){
   return db.select().from('availability')
         .where('user_id', '=', reqObj.id)
@@ -42,13 +43,17 @@ util.getAvail = function(reqObj){
 }
 
 util.searchUsers = function(reqObj) {
-  //console.log('reqObj:', reqObj.start);
-  return db.from('availability')
-        .innerJoin('journeymen','id', 'user_id')
+  console.log(reqObj);
+  return db.select().from('availability')
+        .innerJoin('journeymen', 'user_id', 'journeymen.id')
         .where('availability.instrument','=', reqObj.instrument)
         .andWhere('availability.start', '<=', reqObj.start)
         .andWhere('availability.end', '>=', reqObj.end)
-        .select();
+        .then(function(row){
+        console.log('row:', row);
+          return row;
+        })
+       
 }
 
 /*************************
@@ -78,6 +83,7 @@ util.updateUser = function(reqObj){
 }
 
 util.updateAvail = function(reqObj){
+  console.log(reqObj);
   return db('availability')
         .where('id', '=', reqObj.id)
         .update(reqObj);
@@ -104,6 +110,6 @@ util.addAuth = function(reqObj){
 
 util.removeAuth = function(reqObj){
   return db('auth')
-        .where('user_id','=', reqObj.id)
+        .where('user_id','=', reqObj.soundcloud_id)
         .del();
 }

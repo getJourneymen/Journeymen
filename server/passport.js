@@ -27,6 +27,7 @@ app.use(cookieParser('kitkat'));
   user.soundcloud_id is also the id passed to deserialize*/
 
 passport.serializeUser(function(user, done){
+  console.log(user);
   done(null, user.soundcloud_id);
 });
 
@@ -39,6 +40,7 @@ passport.deserializeUser(function(id, done) {
 
   return util.getUser({soundcloud_id:id})
         .then(function(user){
+          console.log(user);
           return done(null,user);
         })
         .catch(function(err){

@@ -35,8 +35,8 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('availability', function(table) {
       table.increments('id').primary();
       table.integer('user_id').references('id').inTable('journeymen');
-      table.timestamp('start');
-      table.timestamp('end');
+      table.dateTime('start');
+      table.dateTime('end');
       table.string('instrument');
     })
   ])
@@ -51,3 +51,9 @@ exports.down = function(knex, Promise) {
     knex.schema.dropTable('availability')
   ])
 }
+
+
+
+
+
+
