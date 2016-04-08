@@ -12,6 +12,11 @@
       <label for="description">Description</label>
       <textarea name="description" rows="3" cols="40" ng-model="user.description" class="form-control"></textarea>
     </div>
+    <p>Instruments:</p>
+      <div class="userInstruments input-group">
+        <label ng-repeat="(key, instrument) in instruments" >{{instruments[key]}}
+      <input type="checkbox" ng-model="instruments[key].selected" ng-value="key"></option></label>
+   </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
