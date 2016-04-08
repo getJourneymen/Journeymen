@@ -1,5 +1,5 @@
 angular.module('JourneymenApp.Auth', [])
-.factory('AuthSvc', [function() {
+.factory('AuthSvc', function() {
 
   var authToken = null;
 
@@ -14,4 +14,4 @@ angular.module('JourneymenApp.Auth', [])
   }
 
   return auth;
-}]);
+});
