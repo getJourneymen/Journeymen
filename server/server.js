@@ -137,13 +137,16 @@ app.delete('/avail', function(req,res){
   })
 })
 
-app.get('/logout',function(req,res){
+app.get('/logout', ensureAuthenticated, function(req,res){
   return util.removeAuth(req.user)
   .then(function(){
     return req.logout();
   })
   .then(function(){
     return res.redirect('/');
+  })
+  .catch(function(err){
+    console.log("An error occurred on logout: ", err);
   })
 })
 
@@ -157,7 +160,7 @@ app.get('/auth/soundcloud/callback',
     //console.log('req.user:', req.user);
     // console.log('req.session.passport.user:', req.session.passport.user);
   //res.redirect('/user');
-  });
+  })
 
 /**********************************
         Middleware Auth Check
