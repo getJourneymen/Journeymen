@@ -2,15 +2,16 @@
   <form class="profileForm" ng-submit="editProfile()">
     <div class="input-group">
       <label for="first">First Name</label>
-      <input type="text" name="first" ng-model="first">
+      <input type="text" name="first" class="form-control" ng-model="user.first">
     </div>
     <div class="input-group">
       <label for="last">Last Name</label>
-      <input type="text" name="last" ng-model="last">
+      <input type="text" name="last" ng-model="user.last" class="form-control">
     </div>
     <div class="input-group">
       <label for="description">Description</label>
-      <textarea name="description" rows="3" cols="40" ng-model="description"></textarea>
+      <textarea name="description" rows="3" cols="40" ng-model="user.description" class="form-control"></textarea>
     </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>

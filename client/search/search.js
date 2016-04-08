@@ -20,7 +20,7 @@ angular.module('JourneymenApp.Search',[])
   }
 ])
 
-app.controller('ResultsCtlr', ['$scope', 'SearchSvc', function($scope, SearchSvc) {
+.controller('ResultsCtlr', ['$scope', 'SearchSvc', function($scope, SearchSvc) {
 
   $scope.results = {}
 

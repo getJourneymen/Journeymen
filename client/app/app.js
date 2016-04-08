@@ -6,7 +6,8 @@ angular.module('JourneymenApp', [
     'JourneymenApp.Auth',
     'JourneymenApp.Instruments',
     'JourneymenApp.Profile',
-    'JourneymenApp.Avail'
+    'JourneymenApp.Avail',
+    'JourneymenApp.ProfileEdit'
 ])
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -47,7 +48,7 @@ angular.module('JourneymenApp', [
             authenticate: true
         })
         .state('profile-edit', {
-            url: '/profile/:username/edit',//add userid to url
+            url: '/profile-edit',//add userid to url
             templateUrl: '../user/editprofile.html',
             controller: 'EditprofileCtlr',
             authenticate: true

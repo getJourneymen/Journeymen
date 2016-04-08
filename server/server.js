@@ -45,7 +45,7 @@ app.get('/login', passport.authenticate('soundcloud'));
           params: {instrument: [1], start: 'timestamp', end: 'timestamp'})
         })
   3. Getting /avail and /user doesn't need querystring because req.body
-     will have been set by passport deserialize. We match with req.user.id 
+     will have been set by passport deserialize. We match with req.user.id
   4. Logout
 ******************************************/
 
@@ -124,7 +124,7 @@ app.put('/user', function(req,res){
     return res.status(200).send(req.body);
   })
   .catch(function(err){
-    return res.status(400).send('Something went wrong');
+    return res.status(400).send('Something went wrong:', err);
   })
 })
 
