@@ -1,7 +1,7 @@
-angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.Profile'])
-    .controller('EditprofileCtlr', function($scope,$state, EditprofileSvc, ProfileSvc) {
+angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.Profile','JourneymenApp.Instruments'])
+.controller('EditprofileCtlr', ['$scope','$state','EditprofileSvc', 'ProfileSvc', 'InstrSvc', function($scope,$state, EditprofileSvc, ProfileSvc, InstrSvc) {
         $scope.user = {};
-
+        $scope.instruments = InstrSvc.getInstruments();
         // $scope.first = ProfileSvc.extractName.firstname; //may need to edit access
         // $scope.last = ProfileSvc.extractName.lastname; //may need to edit access
         // $scope.pic = ProfileSvc.extractPic;
@@ -12,9 +12,9 @@ angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.
                   first_name: profileData.first_name,
                   last_name: profileData.last_name,
                   email: profileData.email,
-                  description: profileData.description
+                  description: profileData.description,
+                  instruments: InstrSvc.findInstruments(profileData.instrument.split(','))
                 }
-                // $scope.user.instruments = InstrSvc.findInstruments(profileData.instrument);
                 console.log('user data is :', $scope.user)
             })
             .catch(function() {
@@ -24,7 +24,7 @@ angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.
         $scope.editProfile = function(){
         	EditprofileSvc.storeUser($scope.user)
         }
-    })
+    }])
     //send authtoken and call update user endpoint put endpoin '/user' and put endpoint: '/avail' with updated object
     .factory('EditprofileSvc', function($http) {
 
@@ -52,7 +52,6 @@ angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.
         }
 
         return {
-            retrieveProfile: retrieveProfile,
             extractName: extractName,
             extractPic: extractPic,
             storeUser: storeUser,

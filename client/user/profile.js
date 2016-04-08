@@ -10,7 +10,7 @@ angular.module('JourneymenApp.Profile',['JourneymenApp.Auth','JourneymenApp.Inst
                 $scope.user.email = profileData.email;
                 $scope.user.description = profileData.description;
                 // $scope.user.instruments = InstrSvc.findInstruments(profileData.instrument);
-                $scope.user.instruments = InstrSvc.findInstruments(profileData.instruments);
+                $scope.user.instruments = InstrSvc.findInstruments(profileData.instrument);
      //            console.log('user data is :', $scope.user)
             })
             .catch(function() {
