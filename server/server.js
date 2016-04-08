@@ -105,7 +105,9 @@ app.get('/user/me', ensureAuthenticated, function(req,res){
 **********************************/
 
 app.post('/avail', function(req, res) {
-  return util.createAvail(req.body)
+  var entry = req.body;
+  entry.user_id = req.user.id;
+  return util.createAvail(entry)
   .then(function(){
     return res.status(200).send('New availability was created!');
   })
@@ -123,7 +125,7 @@ app.put('/user', ensureAuthenticated, function(req,res){
   user.id = req.user.id;
   util.updateUser(user)
   .then(function(data){
-    Console.log ("Updated user in db", data)
+    console.log ("Updated user in db", data)
     res.status(200).send(data);
   })
   .catch(function(err){
