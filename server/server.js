@@ -121,13 +121,13 @@ app.post('/avail', function(req, res) {
 app.put('/user', ensureAuthenticated, function(req,res){
   var user = req.body;
   user.id = req.user.id;
-  return util.updateUser(user)
+  util.updateUser(user)
   .then(function(data){
     Console.log ("Updated user in db", data)
-    return res.status(200).send(data);
+    res.status(200).send(data);
   })
   .catch(function(err){
-    return res.status(400).send('Something went wrong:', err);
+    res.status(400).send('Something went wrong:', err);
   })
 })
 

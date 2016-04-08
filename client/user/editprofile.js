@@ -13,7 +13,7 @@ angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.
                   last_name: profileData.last_name,
                   email: profileData.email,
                   description: profileData.description,
-                  instruments: InstrSvc.findInstruments(profileData.instrument.split(','))
+                  instrument: InstrSvc.findInstruments(profileData.instrument.split(','))
                 }
                 console.log('user data is :', $scope.user)
             })
