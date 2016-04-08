@@ -123,6 +123,7 @@ app.put('/user', ensureAuthenticated, function(req,res){
   user.id = req.user.id;
   return util.updateUser(user)
   .then(function(data){
+    Console.log ("Updated user in db", data)
     return res.status(200).send(data);
   })
   .catch(function(err){

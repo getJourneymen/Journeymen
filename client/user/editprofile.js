@@ -48,7 +48,8 @@ angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.
 
         function storeUser(userData) {
           console.log('Going to update user', userData)
-            return $http.put(createUserUri, userData)
+            return $http
+                .put(createUserUri, userData)
                 .then(function(res) {
                     console.log('Successfully modified user: ', res)
                 })

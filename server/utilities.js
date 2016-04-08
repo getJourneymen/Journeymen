@@ -81,7 +81,7 @@ util.updateUser = function(userObj){
   var id = userObj.id;
   delete userObj.id;
   return db('journeymen')
-        .where('id', '=', userObj.id)
+        .where('id', '=', id)
         .update(userObj);
 }
 
