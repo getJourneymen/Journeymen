@@ -7,8 +7,8 @@ angular.module('JourneymenApp.Profile',['JourneymenApp.Auth'])
         ProfileSvc.retrieveProfile($state.params.uname)
             .then(function(profileData) {
                 $scope.user.pic = profileData.img_url;
-                $scope.user.first = profileData.first_name;
-                $scope.user.last = profileData.last_name;
+                $scope.user.first_name = profileData.first_name;
+                $scope.user.last_name = profileData.last_name;
                 $scope.user.email = profileData.email;
                 $scope.user.description = profileData.description;
                 // $scope.user.instruments = InstrSvc.findInstruments(profileData.instrument);

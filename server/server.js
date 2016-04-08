@@ -118,10 +118,13 @@ app.post('/avail', function(req, res) {
     Update/Remove Information--PUT & DELETE
 **********************************************/
 
-app.put('/user', function(req,res){
-  return util.updateUser(req.body)
-  .then(function(){
-    return res.status(200).send(req.body);
+app.put('/user', ensureAuthenticated, function(req,res){
+  var user = req.body;
+  user.id = req.user.id;
+  return util.updateUser(user)
+  .then(function(data){
+    Console.log ("Updated user in db", data)
+    return res.status(200).send(data);
   })
   .catch(function(err){
     return res.status(400).send('Something went wrong:', err);
