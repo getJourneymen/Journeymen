@@ -1,21 +1,21 @@
 angular.module('JourneymenApp.Profile',['JourneymenApp.Auth','JourneymenApp.Instruments'])
     .controller('ProfileCtlr', ['$scope','$state','ProfileSvc','AuthSvc', 'InstrSvc', function($scope, $state, ProfileSvc, AuthSvc,InstrSvc) {
      $scope.user = {};
-     $scope.user.instruments = InstrSvc.findInstruments([3,6]);
-     // console.log('state params', $state)
-     //    ProfileSvc.retrieveProfile($state.params.uname)
-     //        .then(function(profileData) {
-     //            $scope.user.pic = profileData.img_url;
-     //            $scope.user.first = profileData.first_name;
-     //            $scope.user.last = profileData.last_name;
-     //            $scope.user.email = profileData.email;
-     //            $scope.user.description = profileData.description;
-     //            $scope.user.instruments = InstrSvc.findInstruments(profileData.instrument);
+     console.log('state params', $state)
+        ProfileSvc.retrieveProfile($state.params.uname)
+            .then(function(profileData) {
+                $scope.user.pic = profileData.img_url;
+                $scope.user.first = profileData.first_name;
+                $scope.user.last = profileData.last_name;
+                $scope.user.email = profileData.email;
+                $scope.user.description = profileData.description;
+                // $scope.user.instruments = InstrSvc.findInstruments(profileData.instrument);
+                $scope.user.instruments = InstrSvc.findInstruments(profileData.instruments);
      //            console.log('user data is :', $scope.user)
-     //        })
-     //        .catch(function() {
-     //            console.log('Error displaying data')
-     //        })
+            })
+            .catch(function() {
+                console.log('Error displaying data')
+            })
     }])
     .factory('ProfileSvc', function($state, $http) {
 
