@@ -1,5 +1,5 @@
-angular.module('JourneymenApp')
-    .controller('AvailCtlr', function($scope, $state, AvailSvc, AuthSvc, InstrSvc) {
+angular.module('JourneymenApp.Avail',[])
+.controller('AvailCtlr', function($scope, $state, AvailSvc, AuthSvc, InstrSvc) {
         $scope.start = '';
         $scope.end = '';
         $scope.instruments = InstrSvc.getInstruments();
@@ -23,7 +23,7 @@ angular.module('JourneymenApp')
                 });
         }
     })
-    .factory('AvailSvc', function($http) {
+.factory('AvailSvc', function($http) {
 
         var setAvailUri = '/avail';
 
