@@ -8,10 +8,8 @@
     <label for="startTime" class="sr-only">To</label>
       <input type="datetime" name="end" ng-model="end">
     </div>
-    <select name="instrument" ng-controller="InstrumentCtlr">
-      <option ng-model="searchCtlr.instrument">Choose an instrument</option>
-      <option ng-repeat="instrument in instruments" value="{{instrument.id}}">{{instrument.name}}</option>
-    </select>
+    <div ui-view>
+    </div>
     <div class="input-group">
       <label for="location" class="sr-only">Location</label>
       <input type="text" name="location" ng-model="location" placeholder="Location"></input>

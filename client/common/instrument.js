@@ -1,4 +1,7 @@
-angular.module('JourneymenApp')
+angular.module('JourneymenApp.Instruments', [])
+    .controller('InstrumentsCtlr', ['$scope', 'InstrSvc', function ($scope, InstrSvc) {
+      $scope.instruments = InstrSvc.getInstruments();
+    }])
     .factory('InstrSvc', function() {
         var instruments = {
             1: 'Guitar',
