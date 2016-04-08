@@ -53,7 +53,7 @@ util.searchUsers = function(reqObj) {
         console.log('row:', row);
           return row;
         })
-       
+
 }
 
 /*************************
@@ -76,10 +76,13 @@ util.createAvail = function(reqObj){
    PUT Request Utilities
 ***************************/
 
-util.updateUser = function(reqObj){
+util.updateUser = function(userObj){
+  console.log('Attempting to update user ', userObj)
+  var id = userObj.id;
+  delete userObj.id;
   return db('journeymen')
-        .where('id', '=', reqObj.id)
-        .update(reqObj);
+        .where('id', '=', userObj.id)
+        .update(userObj);
 }
 
 util.updateAvail = function(reqObj){

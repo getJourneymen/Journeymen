@@ -9,8 +9,8 @@ angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.
         ProfileSvc.retrieveProfile($state.params.uname)
             .then(function(profileData) {
                 $scope.user = {
-                  first: profileData.first_name,
-                  last: profileData.last_name,
+                  first_name: profileData.first_name,
+                  last_name: profileData.last_name,
                   email: profileData.email,
                   description: profileData.description
                 }
@@ -48,9 +48,9 @@ angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.
 
         function storeUser(userData) {
           console.log('Going to update user', userData)
-            $http.put(createUserUri, userData)
+            return $http.put(createUserUri, userData)
                 .then(function(res) {
-                    console.log('Successfully added user: ', res)
+                    console.log('Successfully modified user: ', res)
                 })
                 .catch(function(err) {
                     console.log('Error adding user: ', err)
