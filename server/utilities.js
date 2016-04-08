@@ -33,6 +33,7 @@ util.getUserBySoundcloud = function(soundcloud_id) {
         });
 }
 
+
 util.getAvail = function(reqObj){
   return db.select().from('availability')
         .where('user_id', '=', reqObj.id)

@@ -82,6 +82,7 @@ app.get('/user', function(req,res){
     .catch(function(err){
       console.error(err)
     })
+})
 
 app.get('/user/me', ensureAuthenticated, function(req,res){
   console.log('req.user:', req.user);
