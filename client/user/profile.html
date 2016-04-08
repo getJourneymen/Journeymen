@@ -6,7 +6,7 @@
   {{user.description}}
   <p>Instruments:</p>
     <div class="userInstruments">
-    <li ng-repeat="(key, instrument) in instruments" ng-model="instruments" ng-value="key">{{instruments[key]}}</li>
+    <li ng-repeat="(key, instrument) in user.instruments" ng-model="user.instruments" ng-value="key">{{user.instruments[key]}}</li>
  </div>
   <a href="#">Check availability</a>
 </div>
