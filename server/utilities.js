@@ -17,6 +17,22 @@ util.getUser = function(reqObj) {
         });
 }
 
+util.getUserByUsername = function(username) {
+  return db.select().from("journeymen")
+        .where('username', '=', username)
+        .then(function(rows) {
+        return rows[0];
+        });
+}
+
+util.getUserBySoundcloud = function(soundcloud_id) {
+  return db.select().from("journeymen")
+        .where('soundcloud_id', '=', soundcloud_id)
+        .then(function(rows) {
+        return rows[0];
+        });
+}
+
 util.getAvail = function(reqObj){
   return db.select().from('availability')
         .where('user_id', '=', reqObj.id)
