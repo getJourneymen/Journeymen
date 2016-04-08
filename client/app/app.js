@@ -3,11 +3,10 @@ angular.module('JourneymenApp', [
     'ui.bootstrap',
     'checklist-model',
     'JourneymenApp.Search',
-    'JourneymenApp.Auth'
-
-    //modules placeholder
-    // 'JourneymenApp.auth',
-    // 'JourneymenApp.user',
+    'JourneymenApp.Auth',
+    'JourneymenApp.Instruments',
+    'JourneymenApp.Profile',
+    'JourneymenApp.Avail'
 ])
 
 .config(function($stateProvider, $urlRouterProvider) {
