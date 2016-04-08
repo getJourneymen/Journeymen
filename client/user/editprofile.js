@@ -39,13 +39,6 @@ angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.
             return soundCloudData.pic; //verify after return data confirmed
         }
 
-        function retrieveProfile() {
-            //After Authentication , Auth factory should
-            //provide global access to current user (first, last, and pic)
-            //so here we would access Auth.currentUser (i.e)
-            //soundCloudData = //equal to what auth factory provides
-        }
-
         function storeUser(userData) {
           console.log('Going to update user', userData)
             return $http
