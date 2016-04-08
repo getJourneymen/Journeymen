@@ -1,18 +1,29 @@
-angular.module('JourneymenApp.ProfileEdit',[])
-    .controller('EditprofileCtlr', function($scope,$state, EditprofileSvc) {
-        $scope.pic;
-        $scope.first = '';
-        $scope.last = '';
-        $scope.description = '';
+angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.Profile'])
+    .controller('EditprofileCtlr', function($scope,$state, EditprofileSvc, ProfileSvc) {
+        $scope.user = {};
 
         // $scope.first = ProfileSvc.extractName.firstname; //may need to edit access
         // $scope.last = ProfileSvc.extractName.lastname; //may need to edit access
         // $scope.pic = ProfileSvc.extractPic;
 
-        $scope.editProfile = function(){
-        	//create user and set avail?
-        }
+        ProfileSvc.retrieveProfile($state.params.uname)
+            .then(function(profileData) {
+                $scope.user = {
+                  first: profileData.first_name,
+                  last: profileData.last_name,
+                  email: profileData.email,
+                  description: profileData.description
+                }
+                // $scope.user.instruments = InstrSvc.findInstruments(profileData.instrument);
+                console.log('user data is :', $scope.user)
+            })
+            .catch(function() {
+                console.log('Error displaying data')
+            })
 
+        $scope.editProfile = function(){
+        	EditprofileSvc.storeUser($scope.user)
+        }
     })
     //send authtoken and call update user endpoint put endpoin '/user' and put endpoint: '/avail' with updated object
     .factory('EditprofileSvc', function($http) {
