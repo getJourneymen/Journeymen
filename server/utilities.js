@@ -73,7 +73,7 @@ util.createAvail = function(reqObj){
 }
 
 /**************************
-   PUT Request Utilities
+  PUT Request Utilities
 ***************************/
 
 util.updateUser = function(userObj){
@@ -104,15 +104,20 @@ util.removeAvail = function(reqObj){
 }
 
 /*************************
-   Auth Table Utilities
+  Auth Table Utilities
 **************************/
 
-util.addAuth = function(reqObj){
-  return db('auth').insert(reqObj);
+util.addAuth = function(obj){
+  return db('auth').insert(obj);
+}
+//util to check Auth table--for development p
+util.getAuth = function(){
+  return db.select().from('auth');
 }
 
 util.removeAuth = function(reqObj){
   return db('auth')
-        .where('user_id','=', reqObj.soundcloud_id)
+        .where('user_id','=', reqObj.id)
         .del();
 }
+
