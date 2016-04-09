@@ -113,9 +113,9 @@ app.get('/user/me', ensureAuthenticated, function(req,res){
 **********************************/
 
 app.post('/avail', function(req, res) {
-  // var entry = req.body;
-  // entry.user_id = req.user.id;
-  return util.createAvail(req.body)
+  var entry = req.body;
+  entry.user_id = req.user.id;
+  return util.createAvail(entry)
   .then(function(){
     return res.status(200).send('New availability was created!');
   })
