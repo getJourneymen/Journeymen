@@ -2,15 +2,15 @@
     <form id="availability" ng-submit="setAvailability()">
         <div class="input-group">
             <label for="start">Start</label>
-            <input type="datetime" name="start" ng-model="start">
+            <input type="datetime" name="start" class="form-control" ng-model="start">
         </div>
         <div class="input-group">
             <label for="end">End</label>
-            <input type="datetime" name="end" ng-model="end">
+            <input type="datetime" name="end" ng-model="end" class="form-control">
         </div>
         <div class="input-group">
             <label for="instruments" ng-repeat="(key, instrument) in instruments">
-                <input type="checkbox" class="instrumentSel" name="instrumentSel" checklist-model="selectedInstruments.ids" checklist-value="key"> {{instrument}}
+                <input type="checkbox" class="instrumentSel" name="instrumentSel" checklist-model="selectedInstruments.ids" checklist-value="key" class="form-control"> {{instrument}}
             </label>
         </div>
     </form>
