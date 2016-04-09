@@ -24,15 +24,15 @@ angular.module('JourneymenApp', [
             controller: 'SearchCtlr',
             authenticate: true
         })
-        .state('search.instruments', {
-          url: "/instruments",
-          templateUrl: "../common/instruments.list.html",
-          controller: 'InstrumentsCtl'
-        })
+        // .state('search.instruments', {
+        //   url: "/instruments",
+        //   templateUrl: "../common/instruments.list.html",
+        //   controller: 'InstrumentsCtl'
+        // })
         .state('results', {
             url: '/results',
             templateUrl: '../search/results.html',
-            controller: 'SearchCtlr',
+            controller: 'ResultsCtlr',
             authenticate: true
         })
         .state('profile', {
