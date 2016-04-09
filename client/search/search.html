@@ -1,18 +1,26 @@
 <div class="searchContainer">
   <form id="searchForm" name="searchForm" ng-controller="SearchCtlr" ng-submit="search()">
-    <div class="input-group">
-    <label for="startTime" class="sr-only">From</label>
-      <input type="datetime" name="start" ng-model="end">
+    <div class="form-group">
+    <label for="start">From</label>
+      <input type="datetime" name="start" ng-model="start" class="form-control">
     </div>
-    <div class="input-group">
-    <label for="startTime" class="sr-only">To</label>
-      <input type="datetime" name="end" ng-model="end">
+    <div class="form-group">
+    <label for="end">To</label>
+      <input type="datetime" name="end" ng-model="end" class="form-control">
     </div>
     <div ui-view>
     </div>
-    <div class="input-group">
-      <label for="location" class="sr-only">Location</label>
-      <input type="text" name="location" ng-model="location" placeholder="Location"></input>
+    <div class="form-group">
+      <label for="location">Location</label>
+      <input type="text" name="location" ng-model="location" placeholder="Location" class="form-control"></input>
     </div>
+    <label for="instrument">Instruments:</p>
+      <div class="searchInstruments form-group">
+        <select class="form-control"  name="instrument" ng-model="instrument">
+                <option value=''>Select one...</option>
+                <option ng-repeat="(key, instrument) in instruments" type="checkbox" class="instrumentSel" name="instrumentSel" value="key">{{instrument}}</option>
+          </select>
+        </div>
+    <input type="button" name="submit" value="Find Journeymen" class="btn btn-primary">
   </form>
 </div>
