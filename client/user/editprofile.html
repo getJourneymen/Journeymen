@@ -14,8 +14,9 @@
     </div>
     <p>Instruments:</p>
       <div class="userInstruments input-group">
-        <label ng-repeat="(key, instrument) in instruments" >{{instruments[key]}}
-      <input type="checkbox" ng-model="instruments[key].selected" ng-value="key"></option></label>
+        <label for="instruments" ng-repeat="(key, instrument) in instruments">
+                <input type="checkbox" class="instrumentSel" name="instrumentSel" checklist-model="selectedInstruments.ids" checklist-value="key"> {{instrument}}
+            </label>
    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>

@@ -2,19 +2,24 @@ angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.
 .controller('EditprofileCtlr', ['$scope','$state','EditprofileSvc', 'ProfileSvc', 'InstrSvc', function($scope,$state, EditprofileSvc, ProfileSvc, InstrSvc) {
         $scope.user = {};
         $scope.instruments = InstrSvc.getInstruments();
-        // $scope.first = ProfileSvc.extractName.firstname; //may need to edit access
-        // $scope.last = ProfileSvc.extractName.lastname; //may need to edit access
-        // $scope.pic = ProfileSvc.extractPic;
+        $scope.selectedInstruments = { ids: [] };
+
 
         ProfileSvc.retrieveProfile($state.params.uname)
             .then(function(profileData) {
+                //uncomment line below after db instrument is changed back to array of id strings
+                $scope.selectedInstruments.ids.push(profileData.instrument)
+                //line below this just shows that is working expecting array of instrument id strings
+                $scope.selectedInstruments.ids.push('2','4')
                 $scope.user = {
                   first_name: profileData.first_name,
                   last_name: profileData.last_name,
                   email: profileData.email,
                   description: profileData.description,
-                  instrument: InstrSvc.findInstruments(profileData.instrument.split(','))
+                  instrument: $scope.selectedInstruments.ids
+
                 }
+                console.log('instData ',profileData.instrument)
                 console.log('user data is :', $scope.user)
             })
             .catch(function() {
@@ -25,19 +30,9 @@ angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.
         	EditprofileSvc.storeUser($scope.user)
         }
     }])
-    //send authtoken and call update user endpoint put endpoin '/user' and put endpoint: '/avail' with updated object
     .factory('EditprofileSvc', function($http) {
 
-        var soundCloudData = {};
         var createUserUri = '/user';
-
-        function extractName() {
-            return soundCloudData.name; //verify after return data confirmed
-        }
-
-        function extractPic() {
-            return soundCloudData.pic; //verify after return data confirmed
-        }
 
         function storeUser(userData) {
           console.log('Going to update user', userData)
@@ -52,8 +47,6 @@ angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.
         }
 
         return {
-            extractName: extractName,
-            extractPic: extractPic,
             storeUser: storeUser,
         }
     });
