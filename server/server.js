@@ -63,7 +63,8 @@ app.get('/search', function(req,res){
 })
 
 app.get('/avail', function(req,res){
-  return util.getAvail(req.user)
+  console.log(req.query.id);
+  return util.getAvail(req.query.id)
   .then(function(row){
     return res.send(row);
   })
@@ -112,9 +113,9 @@ app.get('/user/me', ensureAuthenticated, function(req,res){
 **********************************/
 
 app.post('/avail', function(req, res) {
-  var entry = req.body;
-  entry.user_id = req.user.id;
-  return util.createAvail(entry)
+  // var entry = req.body;
+  // entry.user_id = req.user.id;
+  return util.createAvail(req.body)
   .then(function(){
     return res.status(200).send('New availability was created!');
   })

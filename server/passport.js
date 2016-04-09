@@ -8,8 +8,7 @@ var cookieParser = require('cookie-parser');
 module.exports = function(app,express){
 
 app.use(session({
-  secret: 'kitkat',
-  cookie: {maxAge: 6000} 
+  secret: 'kitkat', 
 }));
 
 
