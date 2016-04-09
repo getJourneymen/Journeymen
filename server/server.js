@@ -72,6 +72,13 @@ app.get('/avail', function(req,res){
   })
 })
 
+app.get('/auth', function(req,res){
+  return util.getAuth()
+  .then(function(row){
+    res.send(row)
+  })
+})
+
 app.get('/user', function(req,res){
   // console.log('req.user:', req.user);
     return util.getUserByUsername(req.query.username)
