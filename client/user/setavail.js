@@ -3,16 +3,14 @@ angular.module('JourneymenApp.Avail',['JourneymenApp.Instruments'])
         $scope.start = '';
         $scope.end = '';
         $scope.instruments = InstrSvc.getInstruments();
-        $scope.selectedInstruments = { ids: [] };
+        $scope.selectedInstrument = null;
 
         $scope.setAvailability = function() {
-            AvailSvc.setAvail(JSON.stringify({
-                    time: {
+            AvailSvc.setAvail({
                         start: $scope.start,
                         end: $scope.end,
-                        instrument: $scope.selectedInstruments.ids
-                    }
-                }))
+                        instrument: $scope.selectedInstrument
+                })
                 .then(function(res) {
                     console.log('Successfully set availibility: ', res.statusText);
                     $state.go('profile');
