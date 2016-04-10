@@ -24,15 +24,15 @@ angular.module('JourneymenApp', [
             controller: 'SearchCtlr',
             authenticate: true
         })
-        .state('search.instruments', {
-          url: "/instruments",
-          templateUrl: "../common/instruments.list.html",
-          controller: 'InstrumentsCtl'
-        })
+        // .state('search.instruments', {
+        //   url: "/instruments",
+        //   templateUrl: "../common/instruments.list.html",
+        //   controller: 'InstrumentsCtl'
+        // })
         .state('results', {
             url: '/results',
             templateUrl: '../search/results.html',
-            controller: 'SearchCtlr',
+            controller: 'ResultsCtlr',
             authenticate: true
         })
         .state('profile', {
@@ -54,7 +54,7 @@ angular.module('JourneymenApp', [
             authenticate: true
         })
         .state('setavail', {
-            url: '/profile/:username/setavail',
+            url: '/setavail',
             templateUrl: '../user/setavail.html',
             controller: 'AvailCtlr',
             authenticate: true
