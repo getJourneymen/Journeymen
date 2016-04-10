@@ -22,14 +22,9 @@ angular.module('JourneymenApp.Search',[])
 ])
 
 .controller('ResultsCtlr', ['$scope', 'SearchSvc', function($scope, SearchSvc) {
+  $scope.results = SearchSvc.data();
+  console.log('Show results for search', $scope.results)
 
-  $scope.results = {}
-
-  SearchSvc.data().then(function(data) {
-    console.log('Updating ResultsCtlr data...')
-    $scope.results = data;
-      console.log('Updated ResultsCtlr data...')
-  })
 }])
 .factory('SearchSvc', ['$http', function($http) {
 
@@ -45,7 +40,7 @@ angular.module('JourneymenApp.Search',[])
   factoryObj.search = function(params) {
     //Params should be an object which may contain any of the following keys:
     //start, end, instrument, location
-    $http.get(searchUri, {params: params })
+    return $http.get(searchUri, {params: params })
       .then(function(data){
         results = data; //What is the result data going to look like??
       })
