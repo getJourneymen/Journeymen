@@ -112,7 +112,7 @@ app.get('/user/me', ensureAuthenticated, function(req,res){
    start: DateTime, end: DateTime, instrument: string }}
 **********************************/
 
-app.post('/avail', function(req, res) {
+app.post('/avail', ensureAuthenticated, function(req, res) {
   var entry = req.body;
   entry.user_id = req.user.id;
   return util.createAvail(entry)
