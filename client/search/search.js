@@ -1,11 +1,12 @@
 angular.module('JourneymenApp.Search',[])
-.controller('SearchCtlr', ['$scope', '$state', 'SearchSvc', function($scope, $state, SearchSvc) {
+.controller('SearchCtlr', ['$scope', '$state', 'SearchSvc', 'InstrSvc', function($scope, $state, SearchSvc, InstrSvc) {
 
   //Client should require all fields
   $scope.start = '';
   $scope.end = '';
   $scope.location = '';
   $scope.instrument = '';
+  $scope.instruments = InstrSvc.getInstruments();
 
   $scope.search = function(){
     SearchSvc.search({start: $scope.start, end: $scope.end, location: $scope.location, instrument: $scope.instrument})
