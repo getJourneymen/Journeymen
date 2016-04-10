@@ -4,13 +4,9 @@ angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.
         $scope.instruments = InstrSvc.getInstruments();
         $scope.selectedInstruments = { ids: [] };
 
-
         ProfileSvc.retrieveProfile($state.params.uname)
             .then(function(profileData) {
-                //uncomment line below after db instrument is changed back to array of id strings
-                $scope.selectedInstruments.ids.push(profileData.instrument)
-                //line below this just shows that is working expecting array of instrument id strings
-                $scope.selectedInstruments.ids.push('2','4')
+                $scope.selectedInstruments.ids = profileData.instrument.split(',');
                 $scope.user = {
                   first_name: profileData.first_name,
                   last_name: profileData.last_name,
@@ -19,15 +15,20 @@ angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.
                   instrument: $scope.selectedInstruments.ids
 
                 }
-                console.log('instData ',profileData.instrument)
-                console.log('user data is :', $scope.user)
             })
             .catch(function() {
                 console.log('Error displaying data')
             })
 
         $scope.editProfile = function(){
-        	EditprofileSvc.storeUser($scope.user)
+            $scope.user.instrument = $scope.selectedInstruments.ids.toString();
+            EditprofileSvc.storeUser($scope.user)
+             .then(function(res) {
+                    console.log('Successfully modified user: ', res)
+                })
+                .catch(function(err) {
+                    console.log('Error adding user: ', err)
+                })
         }
     }])
     .factory('EditprofileSvc', function($http) {
@@ -36,14 +37,8 @@ angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.
 
         function storeUser(userData) {
           console.log('Going to update user', userData)
-            return $http
-                .put(createUserUri, userData)
-                .then(function(res) {
-                    console.log('Successfully modified user: ', res)
-                })
-                .catch(function(err) {
-                    console.log('Error adding user: ', err)
-                })
+            return $http.put(createUserUri, userData)
+
         }
 
         return {
