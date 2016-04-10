@@ -45,3 +45,4 @@ angular.module('JourneymenApp.ProfileEdit',['JourneymenApp.Auth','JourneymenApp.
             storeUser: storeUser,
         }
     });
+

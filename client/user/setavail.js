@@ -1,19 +1,16 @@
-angular.module('JourneymenApp.Avail',[])
-.controller('AvailCtlr', function($scope, $state, AvailSvc, AuthSvc, InstrSvc) {
+angular.module('JourneymenApp.Avail',['JourneymenApp.Instruments'])
+.controller('AvailCtlr', ['$scope', '$state', 'AvailSvc', 'InstrSvc', function($scope, $state, AvailSvc, InstrSvc) {
         $scope.start = '';
         $scope.end = '';
         $scope.instruments = InstrSvc.getInstruments();
-        $scope.selectedInstruments = { ids: [] };
+        $scope.selectedInstrument = null;
 
         $scope.setAvailability = function() {
-            AvailSvc.setAvail(JSON.stringify({
-                    time: {
-                        soundcloud_id: AuthSvc.retrieveID(),
+            AvailSvc.setAvail({
                         start: $scope.start,
                         end: $scope.end,
-                        instrument: $scope.selectedInstruments.ids
-                    }
-                }))
+                        instrument: $scope.selectedInstrument
+                })
                 .then(function(res) {
                     console.log('Successfully set availibility: ', res.statusText);
                     $state.go('profile');
@@ -22,7 +19,7 @@ angular.module('JourneymenApp.Avail',[])
                     console.log('Error setting availibility: ', err.statusText);
                 });
         }
-    })
+    }])
 .factory('AvailSvc', function($http) {
 
         var setAvailUri = '/avail';

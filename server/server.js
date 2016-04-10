@@ -112,7 +112,7 @@ app.get('/user/me', ensureAuthenticated, function(req,res){
    start: DateTime, end: DateTime, instrument: string }}
 **********************************/
 
-app.post('/avail', function(req, res) {
+app.post('/avail', ensureAuthenticated, function(req, res) {
   var entry = req.body;
   entry.user_id = req.user.id;
   return util.createAvail(entry)
@@ -141,10 +141,12 @@ app.put('/user', ensureAuthenticated, function(req,res){
   })
 })
 
-app.put('/avail', function(req, res){
-  return util.updateAvail(req.body)
+app.post('/avail', ensureAuthenticated, function(req, res){
+  var availObj = req.body;
+  availObj.id = req.user.id;
+  util.setAvail(availObj)
   .then(function(){
-    return res.status(200).send('All updated');
+    res.status(200).send('All updated');
   })
   .catch(function(err){
     return res.status(400).send(err);
