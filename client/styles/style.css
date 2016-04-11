@@ -5,6 +5,7 @@ footer {
 legend {
 	font-family: 'Permanent Marker', cursive;
 	font-size: 32px; 
+	color: #D96000;
 }
 label {
 	font-family: 'Gentium Book Basic', serif;
@@ -13,15 +14,22 @@ label {
 li {
 	padding-left: 10px;
 	padding-right: 10px;
-	font-size: 18px
+	font-size: 18px;
 }
 body {
-	background-color: #ff0000;
-	background-image: url(http://www.transparenttextures.com/patterns/xv.png);
+	/*background-color: #ff0000;*/
+	/*background-image: url(http://www.transparenttextures.com/patterns/xv.png);*/
+	background-image: url('/assets/bandstage.jpg');
+	background-size: cover;
 }
 button {
 	height: 120%;
 	width: 100%;
+}
+
+img {
+	margin: 0 auto;
+	text-align:center;
 }
 
 #nav-main {
@@ -30,11 +38,16 @@ button {
 	text-align: center;
 }
 
+.navbar-default .navbar-nav>li>a{
+	color: #D96000;
+}
+
 .navbar {
 	font-family: 'Permanent Marker', cursive;
 	font-size: 16px;
 	padding-top: 10px;
 	padding-bottom: 10px;
+	color: #002293;
 }
 .navbar-brand {
 	font-family: 'Permanent Marker', cursive;
