@@ -1,7 +1,106 @@
+
 footer {
   margin-top: 4rem;
 }
-
-.main.container {
-  min-height: 400px;
+legend {
+	font-family: 'Permanent Marker', cursive;
+	font-size: 32px; 
+	color: #D96000;
 }
+label {
+	font-family: 'Gentium Book Basic', serif;
+	font-size: 18px
+}
+li {
+	padding-left: 10px;
+	padding-right: 10px;
+
+	font-size: 18px;
+}
+body {
+	/*background-color: #ff0000;*/
+	/*background-image: url(http://www.transparenttextures.com/patterns/xv.png);*/
+	background-image: url('/assets/bandstage.jpg');
+	background-size: cover;
+	font-size: 18px
+}
+button {
+	height: 120%;
+	width: 100%;
+}
+
+
+img {
+	margin: 0 auto;
+	text-align:center;
+}
+
+
+#nav-main {
+	margin: 0 auto;
+	max-width: 60%;
+	text-align: center;
+}
+
+
+.navbar-default .navbar-nav>li>a{
+	color: #D96000;
+}
+
+
+.navbar {
+	font-family: 'Permanent Marker', cursive;
+	font-size: 16px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+
+	color: #002293;
+
+}
+.navbar-brand {
+	font-family: 'Permanent Marker', cursive;
+	font-size: 32px;
+}
+/*.main.container {
+  min-height: 400px;
+  background-color: white;
+  border-radius: 20px;
+}*/
+
+.instrument {
+	margin-right: 10px;
+}
+
+.input-group {
+	margin-bottom: 5%;
+}
+
+
+.input-group {
+	margin-bottom: 5%;
+}
+
+.form-group {
+	font-family: 'Gentium Book Basic', serif;
+	margin-bottom: 5%;
+	font-size: 18px;
+}
+/*.row {
+	border-radius: 20px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	padding-bottom: 10px;
+}*/
+.content {
+	border-radius: 20px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	padding: 25px 20px 25px 20px;
+	min-height: 400px;
+  background-color: white;
+  border-radius: 20px;
+}
+/*.btn {
+	height: 120% !important;
+	width: 100% !important;
+}*/
+
+

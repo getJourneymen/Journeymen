@@ -6,6 +6,7 @@
     <title>The Journeymen</title>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,700|Bangers|Permanent+Marker|Nothing+You+Could+Do|Gentium+Book+Basic:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/style.css">
 </head>
@@ -19,22 +20,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <div class="navbar-header">
+<!--       <div class="navbar-header">
         <a class="navbar-brand" href="#">
           Journeymen
         </a>
-      </div>
+      </div> -->
       <div class="collapse navbar-collapse" id="nav-main">
       <ul class="nav navbar-nav">
-        <li ui-sref="search" ui-sref-active="active">
-          <a>Search <span class="sr-only">(current)</span></a></li>
-        <li>
+          <li>
           <li ui-sref-active="active">
             <a ui-sref="profile-edit">My Profile</a></li>
           <li ui-sref-active="active">
             <a ui-sref="setavail"> Set availability</a>
           </li>
           <li ui-sref-active="active">
+            <a class="navbar-brand" href="#">
+              Journeymen
+            </a>
+          </li>
+          <li>
           <a ui-sref="signin">Sign In</a></li>
           <li>
           <a href="/logout">Logout <span class="sr-only">(current)</span></a></li>
@@ -45,12 +49,12 @@
 </nav>
   <section class="main container">
     <div class="row">
-      <div class="co-xs-12 col-sm-8 col-sm-offset-2">
+      <div class="co-xs-12 col-sm-8 col-sm-offset-2 content">
         <div ui-view></div>
       </div>
     </div>
   </section>
-  <footer class="container">
+  <!-- <footer class="container">
       <div class="row">
           <div class="col-xs-12 col-sm-10 col-sm-offset-1">
               <div class="well well-sm">
@@ -58,7 +62,7 @@
               </div>
           </div>
       </div>
-  </footer>
+  </footer> -->
     <script src="app/app.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
     <script src="bower_components/checklist-model/checklist-model.js"></script>

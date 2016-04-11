@@ -48,7 +48,7 @@ exports.down = function(knex, Promise) {
   return Promise.all([
     knex.schema.dropTable('journeymen'),
     knex.schema.dropTable('auth'),
-    knex.schema.dropTable('sessions'),
+    knex.schema.dropTable('session'),
     knex.schema.dropTable('availability')
   ])
 }

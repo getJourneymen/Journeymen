@@ -1,5 +1,7 @@
 <div class="availability" ng-controller="AvailCtlr">
     <form id="availability" ng-submit="setAvailability()">
+        <fieldset>
+        <legend> Set Your Availability </legend>
         <div class="form-group">
             <!-- <label for="start">Start</label>
             <input type="datetime" name="start" class="form-control" ng-model="start" ng-required="true"> -->
@@ -23,6 +25,7 @@
             <option ng-repeat="(key, name) in instruments" value="{{key}}">{{name}}</option>
           </select>
         </div>
+        </fieldset>
         <!-- <div class="input-group">
             <label for="instruments" ng-repeat="(key, instrument) in instruments">
                 <input type="checkbox" class="instrumentSel" name="instrumentSel" checklist-model="selectedInstruments.ids" checklist-value="key" class="form-control"> {{instrument}}
