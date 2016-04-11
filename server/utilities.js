@@ -43,11 +43,9 @@ util.getAvail = function(reqObj){
 }
 
 util.getSession = function(sessid){
-  console.log('sessid:', sessid);
   return db.select().from('session')
         .where('sid', '=', sessid)
         .then(function(row){
-        //console.log('row:', row[0].sid)
          if(row[0]){
           return row[0].sid;
          }else{
@@ -57,7 +55,6 @@ util.getSession = function(sessid){
 }
 
 util.searchUsers = function(reqObj) {
-  console.log(reqObj);
   return db.select().from('availability')
         .innerJoin('journeymen', 'user_id', 'journeymen.id')
         .where('availability.instrument','=', reqObj.instrument)
@@ -91,7 +88,6 @@ util.createAvail = function(reqObj){
 ***************************/
 
 util.updateUser = function(userObj){
-  console.log('Attempting to update user ', userObj)
   var id = userObj.id;
   delete userObj.id;
   return db('journeymen')
@@ -100,7 +96,6 @@ util.updateUser = function(userObj){
 }
 
 util.updateAvail = function(reqObj){
-  console.log(reqObj);
   return db('availability')
         .where('id', '=', reqObj.id)
         .update(reqObj);
@@ -123,10 +118,6 @@ util.removeAvail = function(reqObj){
 
 util.addAuth = function(obj){
   return db('auth').insert(obj);
-}
-//util to check Auth table--for development p
-util.getAuth = function(){
-  return db.select().from('auth');
 }
 
 util.removeAuth = function(reqObj){
