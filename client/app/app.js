@@ -15,7 +15,6 @@ angular.module('JourneymenApp', [
         .state('signin', {
             url: '/signin',
             templateUrl: '../auth/signin.html',
-            //controller: ,//fill AuthController
             authenticate: false
         })
         .state('search', {
@@ -24,18 +23,15 @@ angular.module('JourneymenApp', [
             controller: 'SearchCtlr',
             authenticate: true
         })
-        // .state('search.instruments', {
-        //   url: "/instruments",
-        //   templateUrl: "../common/instruments.list.html",
-        //   controller: 'InstrumentsCtl'
-        // })
         .state('results', {
+          //Search transitions to this state once complete.
             url: '/results',
             templateUrl: '../search/results.html',
             controller: 'ResultsCtlr',
             authenticate: true
         })
         .state('profile', {
+          //Optionally include a username in the path which is passed to $stateParams; defaults to null. This is used by the controller to lookup profiles of any user. See links in search results.
             url: '/profile/:uname',
             params: {
               uname: {
@@ -48,12 +44,14 @@ angular.module('JourneymenApp', [
             authenticate: true
         })
         .state('profile-edit', {
-            url: '/profile-edit',//add userid to url
+          //Allow profile editing for current logged in user.
+            url: '/profile-edit',
             templateUrl: '../user/editprofile.html',
             controller: 'EditprofileCtlr',
             authenticate: true
         })
         .state('setavail', {
+          //Allow setting new availability for current logged in user.
             url: '/setavail',
             templateUrl: '../user/setavail.html',
             controller: 'AvailCtlr',
@@ -61,6 +59,9 @@ angular.module('JourneymenApp', [
         })
     $urlRouterProvider.otherwise("/search");
 })
+
+//The following factory (authHttpResponseInterceptor) and config intercept any 401 responses and redirect the user to the signin page. See: http://blog.thesparktree.com/post/75952317665/angularjs-interceptors-globally-handle-401-and.
+
 .factory('authHttpResponseInterceptor',['$q','$location',function($q,$location){
     return {
         response: function(response){
@@ -82,12 +83,3 @@ angular.module('JourneymenApp', [
     //Http Intercpetor to check auth failures for xhr requests
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
 }]);
-// //prevent transition if not authenticated
-// .run(function($rootScope, $state, AuthService){
-// 	$rootScope.$on('$stateChangeStart', function(event,toState, toParams,fromState,fromParams){
-// 		if(toState.authenticate && !AuthService.isAuthenticated()){
-// 			$state.transitionTo('login');
-// 			event.preventDefault();
-// 		}
-// 	})
-// })
