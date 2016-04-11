@@ -25,10 +25,11 @@ exports.up = function(knex, Promise) {
     }),
 
     //Create Sessions Table
-    knex.schema.createTable('sessions', function(table) {
+    knex.schema.createTable('session', function(table) {
       table.increments('id').primary();
-      table.integer('user_id').references('id').inTable('journeymen');
-      table.string('session_token');
+      table.string('sess');
+      table.string('sid');
+      table.timestamp('expire');
     }),
 
     //Create Availability Table

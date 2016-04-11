@@ -2,13 +2,24 @@ var passport = require('passport');
 var auth = require('./auth');
 var SoundCloudStrategy = require('passport-soundcloud').Strategy;
 var session = require('express-session');
+var pg = require('pg');
+var pgSession = require('connect-pg-simple')(session);
+var uuid = require('node-uuid');
 var util = require('./utilities');
 var cookieParser = require('cookie-parser');
 
 module.exports = function(app,express){
 
 app.use(session({
-  secret: 'kitkat', 
+  genid:function(req){
+    return uuid.v1();
+  },
+  store: new pgSession({
+         pg : pg,                                 
+         conString : 'postgresql://localhost/journeymen_dev', 
+         tableName: 'session'             
+  }),
+  secret: 'kitkat',
 }));
 
 
@@ -27,7 +38,8 @@ app.use(cookieParser('kitkat'));
   user.soundcloud_id is also the id passed to deserialize*/
 
 passport.serializeUser(function(user, done){
-  console.log(user);
+  //console.log('in serialize');
+  //console.log(user);
   done(null, user.soundcloud_id);
 });
 
