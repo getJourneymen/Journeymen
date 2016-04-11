@@ -48,11 +48,8 @@ passport.serializeUser(function(user, done){
 
 passport.deserializeUser(function(id, done) {
 
-  console.log('deserial Obj:', id);
-
   return util.getUser({soundcloud_id:id})
         .then(function(user){
-          console.log(user);
           return done(null,user);
         })
         .catch(function(err){

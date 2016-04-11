@@ -96,7 +96,6 @@ app.get('/user', checkSession, function(req,res){
   // console.log('req.user:', req.user);
     return util.getUserByUsername(req.query.username)
       .then(function(row){
-        console.log('user data retreived row:', row, req.query);
         return res.send(row);
       })
     .catch(function(err){
@@ -105,10 +104,8 @@ app.get('/user', checkSession, function(req,res){
 })
 
 app.get('/user/me', checkSession, ensureAuthenticated, function(req,res){
-  console.log('req.sessionID:', req.sessionID);
     return util.getUser(req.user)
       .then(function(row){
-        console.log('user data retreived row:', row);
         return res.send(row);
       })
     .catch(function(err){
@@ -142,11 +139,9 @@ app.post('/avail', ensureAuthenticated, function(req, res) {
 
 app.put('/user', checkSession, function(req,res){
   var user = req.body;
-  console.log('user:', user);
   user.id = req.user.id;
   util.updateUser(user)
   .then(function(data){
-    console.log ("Updated user in db", data)
     res.status(200).send(data);
   })
   .catch(function(err){
@@ -201,7 +196,6 @@ app.get('/auth/soundcloud/callback',
 ***********************************/
 
 function checkSession(req,res,next){
-  console.log('in check session:', req.sessionID)
   return util.getSession(req.sessionID)
   .then(function(id){
     console.log('id:', id);
