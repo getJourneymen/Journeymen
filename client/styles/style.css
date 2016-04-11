@@ -14,6 +14,7 @@ label {
 li {
 	padding-left: 10px;
 	padding-right: 10px;
+
 	font-size: 18px;
 }
 body {
@@ -21,16 +22,19 @@ body {
 	/*background-image: url(http://www.transparenttextures.com/patterns/xv.png);*/
 	background-image: url('/assets/bandstage.jpg');
 	background-size: cover;
+	font-size: 18px
 }
 button {
 	height: 120%;
 	width: 100%;
 }
 
+
 img {
 	margin: 0 auto;
 	text-align:center;
 }
+
 
 #nav-main {
 	margin: 0 auto;
@@ -38,16 +42,20 @@ img {
 	text-align: center;
 }
 
+
 .navbar-default .navbar-nav>li>a{
 	color: #D96000;
 }
+
 
 .navbar {
 	font-family: 'Permanent Marker', cursive;
 	font-size: 16px;
 	padding-top: 10px;
 	padding-bottom: 10px;
+
 	color: #002293;
+
 }
 .navbar-brand {
 	font-family: 'Permanent Marker', cursive;
@@ -62,6 +70,11 @@ img {
 .instrument {
 	margin-right: 10px;
 }
+
+.input-group {
+	margin-bottom: 5%;
+}
+
 
 .input-group {
 	margin-bottom: 5%;
