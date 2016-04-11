@@ -25,8 +25,19 @@ angular.module('JourneymenApp.Instruments', [])
             return instrumentsResult;
         }
 
+        function instrumentById (id)  {
+            var result ='';
+            for (key in instruments){
+                if(id===key){
+                    result = instruments[key];
+                }
+            }
+            return result;
+        }
+
         return {
             getInstruments: getInstruments,
-            findInstruments: findInstruments
+            findInstruments: findInstruments,
+            instrumentById: instrumentById
         }
     });
