@@ -1,5 +1,7 @@
 <div class="searchContainer">
   <form id="searchForm" name="searchForm" ng-controller="SearchCtlr" ng-submit="search()">
+  <legend> Search </legend>
+  <fieldset>
     <div class="form-group">
     <label for="start">From</label>
       <input type="datetime" name="start" ng-model="start" class="form-control" ng-required="true">
@@ -21,6 +23,7 @@
                 <option ng-repeat="(key, instrument) in instruments" type="checkbox" class="instrumentSel" name="instrumentSel" value="key">{{instrument}}</option>
           </select>
         </div>
-    <input type="submit" name="submit" value="Find Journeymen" class="btn btn-primary">
+  </fieldset>
   </form>
+    <button type="submit" name="submit" class="btn btn-primary">Find Journeymen</button>
 </div>

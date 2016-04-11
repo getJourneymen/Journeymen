@@ -1,5 +1,7 @@
 <div class="profile" ng-controller="EditprofileCtlr">
   <form class="profileForm" ng-submit="editProfile()">
+  <fieldset>
+    <legend> Edit Profile </legend>
     <div class="input-group">
       <label for="first">First Name</label>
       <input type="text" name="first" class="form-control" ng-model="user.first_name">
@@ -16,12 +18,13 @@
       <label for="description">Description</label>
       <textarea name="description" rows="3" cols="40" ng-model="user.description" class="form-control"></textarea>
     </div>
-    <p>Instruments:</p>
+    <label for="userInstruments">Instruments:</label>
       <div class="userInstruments input-group">
-        <label for="instruments" ng-repeat="(key, instrument) in instruments">
+        <label for="instruments" ng-repeat="(key, instrument) in instruments" class="instrument">
                 <input type="checkbox" class="instrumentSel" name="instrumentSel" checklist-model="selectedInstruments.ids" checklist-value="key"> {{instrument}}
             </label>
    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
+  </fieldset>
   </form>
 </div>
