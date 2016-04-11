@@ -35,6 +35,7 @@
     "grunt-exec": "^0.4.6",
     "grunt-fixmyjs": "^0.3.0",
     "knex": "^0.8.6",
+    "node-uuid": "^1.4.7",
     "nodemon": "^1.9.1"
   }
 }
