@@ -61,7 +61,7 @@ app.get('/search', function(req,res){
   });
 })
 
-app.get('/avail/username', function(req,res){
+app.get('/avail/username', checkSession, function(req,res){
   return util.getUserByUsername(req.query.username)
     .then(function(obj){
       if(!obj){
@@ -75,7 +75,7 @@ app.get('/avail/username', function(req,res){
     })
 })
 
-app.get('/avail', function(req,res){
+app.get('/avail', checkSession, function(req,res){
   return util.getAvail(req.user)
   .then(function(row){
     return res.send(row);
@@ -84,7 +84,7 @@ app.get('/avail', function(req,res){
     console.error(err);
   })
 })
-
+//purely for development
 app.get('/auth', function(req,res){
   return util.getAuth()
   .then(function(row){
@@ -92,7 +92,7 @@ app.get('/auth', function(req,res){
   })
 })
 
-app.get('/user', function(req,res){
+app.get('/user', checkSession, function(req,res){
   // console.log('req.user:', req.user);
     return util.getUserByUsername(req.query.username)
       .then(function(row){
@@ -124,7 +124,7 @@ app.get('/user/me', checkSession, ensureAuthenticated, function(req,res){
    start: DateTime, end: DateTime, instrument: string }}
 **********************************/
 
-app.post('/avail', function(req, res) {
+app.post('/avail', checkSession, function(req, res) {
   var entry = req.body;
   entry.user_id = req.user.id;
   return util.createAvail(entry)
@@ -140,7 +140,7 @@ app.post('/avail', function(req, res) {
     Update/Remove Information--PUT & DELETE
 **********************************************/
 
-app.put('/user',function(req,res){
+app.put('/user', checkSession, function(req,res){
   var user = req.body;
   console.log('user:', user);
   user.id = req.user.id;
@@ -154,7 +154,7 @@ app.put('/user',function(req,res){
   })
 })
 
-app.post('/avail', ensureAuthenticated, function(req, res){
+app.put('/avail', checkSession, function(req, res){
   //Get id from req.user and add to availObj;
   var availObj = req.body;
   availObj.id = req.user.id;
@@ -167,7 +167,7 @@ app.post('/avail', ensureAuthenticated, function(req, res){
   })
 })
 
-app.delete('/avail', function(req,res){
+app.delete('/avail', ensureAuthenticated, function(req,res){
   return util.removeAvail(req.body)
   .then(function(){
     return res.status(200).send('All updated')
@@ -177,7 +177,7 @@ app.delete('/avail', function(req,res){
   })
 })
 
-app.get('/logout',function(req,res){
+app.get('/logout', ensureAuthenticated,function(req,res){
     req.session.destroy();
     req.logout();
     return res.redirect('/');
