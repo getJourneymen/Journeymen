@@ -3,6 +3,7 @@ angular.module('JourneymenApp.Instruments', [])
       $scope.instruments = InstrSvc.getInstruments();
     }])
     .factory('InstrSvc', function() {
+        //instrument object that holds all instrument options
         var instruments = {
             1: 'Guitar',
             2: 'Piano',
@@ -13,9 +14,11 @@ angular.module('JourneymenApp.Instruments', [])
         }
 
         function getInstruments() {
+            //returns instrument object that contain all instruments
             return instruments;
         }
 
+        //fct that takes an array of instrument IDs and returns and object with the id properties pointing to correct instrument
         function findInstruments(IDarray){
             var instrumentsResult = {};
 
@@ -25,6 +28,7 @@ angular.module('JourneymenApp.Instruments', [])
             return instrumentsResult;
         }
 
+        //fct that takes a single id string and returns the name of the instrument
         function instrumentById (id)  {
             var result ='';
             for (key in instruments){
