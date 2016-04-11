@@ -9,7 +9,7 @@
       </a>
     </div>
     <div class="media-body">
-      <h4 class="media-heading">{{person.first_name}} {{person.last_name}}</h4>
+      <h4 class="media-heading"><a ui-sref="profile({uname:person.username})">{{person.first_name}} {{person.last_name}}</a></h4>
       <div>{{person.description}}</div>
       <div>Available {{person.start | date : 'short'}} &mdash; {{person.end | date : 'short'}}</li></div>
     </div>

@@ -24,7 +24,7 @@ angular.module('JourneymenApp.Profile',['JourneymenApp.Auth','JourneymenApp.Inst
         function retrieveProfile(username) {
             var queryParams = {};
             if(username) queryParams = {username: username};
-            return $http.get(getUserUri, queryParams)
+            return $http.get(getUserUri, {params: queryParams})
                 .then(function(profileData) {
                     console.log('Successfully retrieved profile', profileData);
                     return profileData.data
