@@ -49,13 +49,12 @@ angular.module('JourneymenApp.Profile', ['JourneymenApp.Auth', 'JourneymenApp.In
                 })
         }
 
-        var getAvailUri = '/avail';
-
+        var getAvailUri = $state.params.uname ? '/avail/username': '/avail';
 
         function getAvail(username) {
             var queryParams = {};
             if (username) queryParams = { username: username };
-            return $http.get(getAvailUri, queryParams);
+            return $http.get(getAvailUri, {params: queryParams});
         }
 
 
