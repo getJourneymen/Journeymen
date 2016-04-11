@@ -1,8 +1,12 @@
 <div class="availability" ng-controller="AvailCtlr">
     <form id="availability" ng-submit="setAvailability()">
         <div class="form-group">
-            <label for="start">Start</label>
-            <input type="datetime" name="start" class="form-control" ng-model="start" ng-required="true">
+            <!-- <label for="start">Start</label>
+            <input type="datetime" name="start" class="form-control" ng-model="start" ng-required="true"> -->
+            <label for="startDate">Start Date</label>
+            <input type="date" name="startDate" ng-model="startDate">
+            <label for="startTime">Start Time</label>
+            <input type="time" name="startTime" ng-model="startTime">
         </div>
         <div class="form-group">
             <label for="end">End</label>
