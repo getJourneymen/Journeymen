@@ -3,7 +3,6 @@ var passport = require('passport');
 var bodyParser = require('body-parser');
 var path = require('path');
 var logout = require('express-passport-logout');
-//var auth = require('./auth.js');
 var db = require('./db.js');
 var util = require('./utilities.js');
 var cookieParser = require('cookie-parser');
@@ -44,7 +43,7 @@ app.get('/login', passport.authenticate('soundcloud'));
           url   : '/search',
           params: {instrument: [1], start: 'timestamp', end: 'timestamp'})
         })
-  3. Getting /avail and /user doesn't need querystring because req.body
+  3. Getting /avail and /user doesn't need querystring because req.user
      will have been set by passport deserialize. We match with req.user.id
   4. Logout
 ******************************************/
@@ -62,8 +61,21 @@ app.get('/search', function(req,res){
   });
 })
 
+app.get('/avail/username', function(req,res){
+  return util.getUserByUsername(req.query.username)
+    .then(function(obj){
+      if(!obj){
+        res.status(404).send('not found');
+      }else{
+        return util.getAvail(obj)
+          .then(function(row){
+            res.status(200).send(row);
+          })
+      }
+    })
+})
+
 app.get('/avail', function(req,res){
-  //console.log(req.query.id);
   return util.getAvail(req.user)
   .then(function(row){
     return res.send(row);
@@ -92,8 +104,8 @@ app.get('/user', function(req,res){
     })
 })
 
-app.get('/user/me', ensureAuthenticated, function(req,res){
-  console.log('req.user:', req.user);
+app.get('/user/me', checkSession, ensureAuthenticated, function(req,res){
+  console.log('req.sessionID:', req.sessionID);
     return util.getUser(req.user)
       .then(function(row){
         console.log('user data retreived row:', row);
@@ -128,8 +140,9 @@ app.post('/avail', function(req, res) {
     Update/Remove Information--PUT & DELETE
 **********************************************/
 
-app.put('/user', ensureAuthenticated, function(req,res){
+app.put('/user',function(req,res){
   var user = req.body;
+  console.log('user:', user);
   user.id = req.user.id;
   util.updateUser(user)
   .then(function(data){
@@ -142,6 +155,7 @@ app.put('/user', ensureAuthenticated, function(req,res){
 })
 
 app.post('/avail', ensureAuthenticated, function(req, res){
+  //Get id from req.user and add to availObj;
   var availObj = req.body;
   availObj.id = req.user.id;
   util.setAvail(availObj)
@@ -163,17 +177,11 @@ app.delete('/avail', function(req,res){
   })
 })
 
-app.get('/logout', ensureAuthenticated, function(req,res){
-  return util.removeAuth(req.user)
-  .then(function(){
-    return req.logout();
-  })
-  .then(function(){
+app.get('/logout',function(req,res){
+    req.session.destroy();
+    req.logout();
     return res.redirect('/');
-  })
-  .catch(function(err){
-    console.log("An error occurred on logout: ", err);
-  })
+
 })
 
 /***********************************
@@ -191,6 +199,19 @@ app.get('/auth/soundcloud/callback',
 /**********************************
         Middleware Auth Check
 ***********************************/
+
+function checkSession(req,res,next){
+  console.log('in check session:', req.sessionID)
+  return util.getSession(req.sessionID)
+  .then(function(id){
+    console.log('id:', id);
+   if(id !== null){
+    return next();
+   }else{ 
+    res.status(401).send({err:'no session cookie'});
+   }
+  });
+}
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }

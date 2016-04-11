@@ -42,6 +42,20 @@ util.getAvail = function(reqObj){
         })
 }
 
+util.getSession = function(sessid){
+  console.log('sessid:', sessid);
+  return db.select().from('session')
+        .where('sid', '=', sessid)
+        .then(function(row){
+        //console.log('row:', row[0].sid)
+         if(row[0]){
+          return row[0].sid;
+         }else{
+          return null;
+         }
+        })
+}
+
 util.searchUsers = function(reqObj) {
   console.log(reqObj);
   return db.select().from('availability')
