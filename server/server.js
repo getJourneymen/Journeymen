@@ -124,7 +124,7 @@ app.get('/user/me', checkSession, ensureAuthenticated, function(req,res){
    start: DateTime, end: DateTime, instrument: string }}
 **********************************/
 
-app.post('/avail', checkSession, function(req, res) {
+app.post('/avail', ensureAuthenticated, function(req, res) {
   var entry = req.body;
   entry.user_id = req.user.id;
   return util.createAvail(entry)
@@ -207,7 +207,7 @@ function checkSession(req,res,next){
     console.log('id:', id);
    if(id !== null){
     return next();
-   }else{ 
+   }else{
     res.status(401).send({err:'no session cookie'});
    }
   });

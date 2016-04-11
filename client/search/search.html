@@ -20,10 +20,10 @@
       <div class="searchInstruments form-group">
         <select class="form-control"  name="instrument" ng-model="instrument">
                 <option value=''>Select one...</option>
-                <option ng-repeat="(key, instrument) in instruments" type="checkbox" class="instrumentSel" name="instrumentSel" value="key">{{instrument}}</option>
+                <option ng-repeat="(key, instrument) in instruments" type="checkbox" class="instrumentSel" name="instrumentSel" value="{{key}}">{{instrument}}</option>
           </select>
         </div>
   </fieldset>
   </form>
-    <button type="submit" name="submit" class="btn btn-primary">Find Journeymen</button>
+    <button type="submit" name="submit" form="searchForm" class="btn btn-primary">Find Journeymen</button>
 </div>
