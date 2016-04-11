@@ -63,8 +63,8 @@ app.get('/search', function(req,res){
 })
 
 app.get('/avail', function(req,res){
-  console.log(req.query.id);
-  return util.getAvail(req.query.id)
+  //console.log(req.query.id);
+  return util.getAvail(req.user)
   .then(function(row){
     return res.send(row);
   })

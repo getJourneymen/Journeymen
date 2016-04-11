@@ -20,7 +20,7 @@ angular.module('JourneymenApp.Avail',['JourneymenApp.Instruments'])
                 });
         }
     }])
-.factory('AvailSvc', function($http) {
+.factory('AvailSvc', function($state,$http) {
 
         var setAvailUri = '/avail';
 

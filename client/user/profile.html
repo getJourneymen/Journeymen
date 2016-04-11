@@ -1,14 +1,17 @@
 <div class="profile" ng-controller="ProfileCtlr">
-<div><img ng-src="{{user.pic}}" alt="Photo of {{user.first}} {{user.last}}"></div>
-<div>
-  <h2>{{user.first}} {{user.last}}</h2>
-  <h5>{{user.email}}</h5>
-  {{user.description}}
-  <!-- <p>Instruments:</p>
-    <div class="userInstruments">
-      <ul>
-    <li ng-repeat="(key, instrument) in user.selectedInstruments.ids">{{user.instruments[key]}}</li>
-  </ul> -->
- </div>
-  <a href="#">Check availability</a>
-</div>
+
+
+    <div><img ng-src="{{user.pic}}" alt="Photo of {{user.first}} {{user.last}}"></div>
+    <div>
+        <h2>{{user.first}} {{user.last}}</h2>
+        <h5>{{user.email}}</h5> {{user.description}}
+        <h3>Instruments:</h3>
+        <div class="userInstruments">
+            <p ng-repeat="(key, instrument) in user.instruments" ng-model="user.instruments" ng-value="key">{{user.instruments[key]}}</p>
+        </div>
+        <h3>Availibility</h3>
+        <div>
+            <p ng-repeat="record in avail" >{{record.start | date : 'short'}} {{record.end| date : 'short'}} {{record.instrument}}</p>
+            <div>
+            </div>
+
